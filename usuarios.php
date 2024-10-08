@@ -13,49 +13,25 @@
 
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Facturas</h1>
-
-                    <a href="lineas_facturas_new.php" class="btn btn-primary">Nuevo</a>
+                    <h1 class="h2">Usuarios</h1>
+                    <a href="usuario_new.php" class="btn btn-primary">Nuevo</a>
                 </div>
                 <?php
                 include("db.php");
                 ?>
                 <table class="table">
                     <tr>
-                        <th>Id</th>
-                        <th>Id Facturas</th>
-                        <th>Id Productos</th>
-                        <th>Cantidad</th>
-                        <th>Precio Unitario</th>
-                        <th>Base</th>
-                        <th>Descuento</th>
-                        <th>Iva</th>
-                        <th>Precio</th>
-                        <th>Acciones</th>
+                        <th>id</th>
+                        <th>user</th>
+                        <th>pass</th>
+                        <th>nombre</th>
+                        <th>apellidos</th>
+                        <th>email</th>
+                        <th>acciones</th>
                     </tr>
+
                     <?php
-                    $sql = "SELECT 
-                    `lineas_facturas`.`id`, 
-                    `lineas_facturas`.`id_facturas`, 
-                    `lineas_facturas`.`id_productos`, 
-                    `lineas_facturas`.`cantidad`, 
-                    `lineas_facturas`.`precio_unitario`,
-                    `lineas_facturas`.`base`, 
-                    `lineas_facturas`.`descuento`, 
-                    `lineas_facturas`.`iva`, 
-                    `lineas_facturas`.`precio`, 
-                    `lineas_facturas`.`created_at`, 
-                    `lineas_facturas`.`updated_at`,
-                    facturas.fecha,CONCAT(clientes.nombre,clientes.apellidos) AS 
-                    cli,productos.`producto`, productos.`imagen`, 
-                    productos.`precio` as p1, productos.`iva` as iva1, productos.`stock` FROM `lineas_facturas` ";
-
-                    $sql .= " LEFT JOIN facturas ON `lineas_facturas`.`id_facturas`=facturas.id";
-
-                    $sql .= " LEFT JOIN clientes ON `facturas`.id_clientes=clientes.id";
-
-                    $sql .= " LEFT JOIN productos ON `lineas_facturas`.`id_productos`=productos.id";
-
+                    $sql = "SELECT `id`, `username`, `pass`, `nombre`, `apellidos`, `email`, `created_at`, `updated_at` FROM `usuarios` WHERE 1";
                     $query = $mysqli->query($sql);
                     if ($query->num_rows > 0) {
                         while ($fila = $query->fetch_assoc()) {
@@ -64,17 +40,15 @@
                     ?>
                             <tr id="fila<?php echo $fila["id"]; ?>">
                                 <td><?php echo $fila["id"]; ?></td>
-                                <td><?php echo $fila["id_facturas"]; ?></td>
-                                <td><?php echo $fila["id_productos"]; ?></td>
-                                <td><?php echo $fila["cantidad"]; ?></td>
-                                <td><?php echo $fila["precio_unitario"]; ?></td>
-                                <td><?php echo $fila["base"]; ?></td>
-                                <td><?php echo $fila["descuento"]; ?></td>
-                                <td><?php echo $fila["iva"]; ?></td>
-                                <td><?php echo $fila["precio"]; ?></td>
-                                <td><a href="lineas_facturas_edit.php?id=<?php echo $fila["id"]; ?>"><i class="fa-solid fa-pen-to-square fa-2x"></i></a>
-                                    &nbsp;&nbsp;
-                                    <a href="#" id="btndelete<?php echo $fila["id"]; ?>"><i class="fa-solid fa-trash text-danger"></i></a>
+                                <td><?php echo $fila["username"]; ?></td>
+                                <td><?php echo base64_encode($fila["pass"]); ?></td>
+                                <td><?php echo $fila["nombre"]; ?></td>
+                                <td><?php echo $fila["apellidos"]; ?></td>
+                                <td><?php echo $fila["email"]; ?></td>
+                                <td>
+                                    <a href="usuario_edit.php?id=<?php echo $fila["id"]; ?>"><i class="fa-solid fa-pen-to-square"></i></a>
+                                    &nbsp;&nbsp;&nbsp;
+                                    <a href="#" id="btndelete<?php echo $fila["id"]; ?>"><i class="fa-solid fa-eraser"></i></a>
                                 </td>
                             </tr>
                             <script>
@@ -86,8 +60,9 @@
                                         },
                                         buttonsStyling: false
                                     });
+
                                     swalWithBootstrapButtons.fire({
-                                        title: "Desea eliminar la factura?",
+                                        title: "Desea eliminar al usuario?",
                                         text: "no hay vuelta atrás!",
                                         icon: "warning",
                                         showCancelButton: true,
@@ -102,29 +77,34 @@
                                                     id: <?php echo $fila["id"]; ?>
                                                 },
                                                 method: "GET",
-                                                url: "lineas_facturas_delete.php",
+                                                url: "usuario_delete.php",
                                                 success: function(result) {
                                                     if (result == 1) {
                                                         swalWithBootstrapButtons.fire({
                                                             title: "Eliminado!",
-                                                            text: "Factura dada de baja",
+                                                            text: "Usuario dado de baja",
                                                             icon: "success"
                                                         });
                                                         $("#fila<?php echo $fila["id"]; ?>").hide();
                                                     } else {
                                                         swalWithBootstrapButtons.fire({
                                                             title: "No Eliminado!",
-                                                            text: "Factura NO dada de baja",
+                                                            text: "Usuario NO dado de baja",
                                                             icon: "error"
                                                         });
                                                     }
                                                 }
                                             });
-
                                         } else if (
                                             /* Read more about handling dismissals below */
                                             result.dismiss === Swal.DismissReason.cancel
-                                        ) {}
+                                        ) {
+                                            /*   swalWithBootstrapButtons.fire({
+                                                 title: "Cancelled",
+                                                 text: "Your imaginary file is safe :)",
+                                                 icon: "error"
+                                               });*/
+                                        }
                                     });
                                 });
                             </script>

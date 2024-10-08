@@ -30,6 +30,15 @@
                 Clientes
               </a>
             </li>
+
+            <li class="nav-item">
+          <a class="nav-link d-flex align-items-center gap-2" href="usuarios.php">
+            <svg class="bi">
+              <use xlink:href="#people2" />
+            </svg>
+            Usuarios
+          </a>
+        </li>
               
             <li class="nav-item">
               <a class="nav-link d-flex align-items-center gap-2" href="proveedores.php">

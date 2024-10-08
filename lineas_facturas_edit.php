@@ -10,73 +10,103 @@
     <div class="container-fluid">
         <div class="row">
             <?php include("menu.php"); ?>
-
+            <?php
+            include("db.php");
+            $sql = "SELECT `id`, `id_facturas`, `id_productos`, `cantidad`, `precio_unitario`, `base`, `descuento`, `iva`, `precio`, `created_at`, `updated_at` FROM `lineas_facturas` WHERE  `id`=" . $_GET["id"];
+           
+            $query = $mysqli->query($sql);
+            if ($query->num_rows > 0) {
+                $fila = $query->fetch_assoc();
+            }
+            ?>
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Modificar linea factura</h1>
+                    <h1 class="h2">Editar linea factura</h1>
 
                 </div>
                 <div class="col-4">
-
-                    <form action="#" method="post" enctype="multipart/form-data">
-                        <?php
-                        include("db.php");
-
-                        $sql = "SELECT `id`, `id_facturas`, `id_productos`, `cantidad`, `precio_unitario`, `base`, `descuento`, `iva`, `precio`, `created_at`, `updated_at` FROM `lineas_facturas` WHERE `id`=" . $_GET["id"];
-                        $query = $mysqli->query($sql);
-                        if ($query->num_rows > 0) {
-                            $fila = $query->fetch_assoc();
-                        }
-                        ?>
+                    <form action="#" method="post" enctype="multipart/form-data" id="form1">
 
                         <input type="hidden" name="id" value="<?php echo $fila["id"]; ?>" id="id">
 
                         <div class="mb-3">
-                            <label for="id_facturas" class="form-label">id_facturas</label>
+                            <label for="id_facturas" class="form-label">Factura</label>
                             <span id="id_facturas_error" class="text-danger"></span>
-                            <input type="id_facturas" class="form-control" id="id_facturas" name="id_facturas" placeholder="id_facturas" value="<?php echo $fila["id_facturas"]; ?>">
-                        </div>
+                            <select class="form-control select2" id="id_facturas" name="id_facturas">
+                                <option></option>
+                                <?php
+                                include("db.php");
+                                $sqlFacturas = "SELECT `facturas`.`id`, `facturas`.`fecha`, `facturas`.`id_clientes`, `facturas`.`created_at`, `facturas`.`updated_at`,CONCAT(clientes.nombre,clientes.apellidos) AS cli FROM `facturas` INNER JOIN clientes ON `facturas`.id_clientes=clientes.id";
+                                $resultFacturas = $mysqli->query($sqlFacturas);
+                                if ($resultFacturas->num_rows > 0) {
+                                    while ($filaFacturas = $resultFacturas->fetch_assoc()) {
+                                        $selectedFact = "";
+                                        if ($filaFacturas["id"] == $fila["id_facturas"]) $selectedFact = "selected";
+                                ?>
+                                        <option value="<?php echo $filaFacturas["id"]; ?>" <?php echo $selectedFact; ?>><?php echo $filaFacturas["id"]; ?>- <?php echo $filaFacturas["cli"]; ?></option>
+                                <?php
+                                    }
+                                }
+                                ?>
 
+                            </select>
+                        </div>
                         <div class="mb-3">
-                            <label for="id_productos" class="form-label">Id productos</label>
+                            <label for="id_productos" class="form-label">Producto</label>
                             <span id="id_productos_error" class="text-danger"></span>
-                            <input type="text" class="form-control" id="id_productos" name="id_productos" placeholder="id_productos" value="<?php echo $fila["id_productos"]; ?>">
-                        </div>
+                            <select class="form-control select2" id="id_productos" name="id_productos">
+                                <option></option>
+                                <?php
+                                include("db.php");
+                                $sqlProductos = "SELECT `id`, `producto`, `imagen`, `precio`, `iva`, `stock`, `created_at`, `updated_at` FROM `productos` WHERE 1";
+                                $resultProductos = $mysqli->query($sqlProductos);
+                                if ($resultProductos->num_rows > 0) {
+                                    while ($filaProductos = $resultProductos->fetch_assoc()) {
+                                        $selectedProd = "";
+                                        if ($filaProductos["id"] == $fila["id_productos"]) $selectedProd = "selected";
+                                ?>
+                                        <option value="<?php echo $filaProductos["id"]; ?>" <?php echo $selectedProd; ?>><?php echo $filaProductos["producto"]; ?></option>
+                                <?php
+                                    }
+                                }
+                                ?>
 
+                            </select>
+                        </div>
                         <div class="mb-3">
                             <label for="cantidad" class="form-label">Cantidad</label>
                             <span id="cantidad_error" class="text-danger"></span>
-                            <input type="text" class="form-control" id="cantidad" name="cantidad" placeholder="cantidad" value="<?php echo $fila["cantidad"]; ?>">
+                            <input type="number" class="form-control" id="cantidad" name="cantidad" step="1" value="<?php echo $fila["cantidad"]; ?>">
                         </div>
 
                         <div class="mb-3">
-                            <label for="precio_unitario" class="form-label">Precio_unitario</label>
+                            <label for="precio_unitario" class="form-label">precio unitario</label>
                             <span id="precio_unitario_error" class="text-danger"></span>
-                            <input type="text" class="form-control" id="precio_unitario" name="precio_unitario" placeholder="precio_unitario" value="<?php echo $fila["precio_unitario"]; ?>">
+                            <input type="number" class="form-control" id="precio_unitario" name="precio_unitario" step="0.1" value="<?php echo $fila["precio_unitario"]; ?>">
                         </div>
 
                         <div class="mb-3">
-                            <label for="base" class="form-label">Base</label>
+                            <label for="base" class="form-label">base imp</label>
                             <span id="base_error" class="text-danger"></span>
-                            <input type="text" class="form-control" id="base" name="base" placeholder="base" value="<?php echo $fila["base"]; ?>">
+                            <input type="number" class="form-control" id="base" name="base" step="0.1" value="<?php echo $fila["base"]; ?>">
                         </div>
 
                         <div class="mb-3">
-                            <label for="descuento" class="form-label">Descuento</label>
+                            <label for="descuento" class="form-label">descuento</label>
                             <span id="descuento_error" class="text-danger"></span>
-                            <input type="text" class="form-control" id="descuento" name="descuento" placeholder="descuento" value="<?php echo $fila["descuento"]; ?>">
+                            <input type="number" class="form-control" id="descuento" name="descuento" step="0.1" value="<?php echo $fila["descuento"]; ?>">
                         </div>
 
                         <div class="mb-3">
-                            <label for="iva" class="form-label">IVA</label>
+                            <label for="iva" class="form-label">iva</label>
                             <span id="iva_error" class="text-danger"></span>
-                            <input type="text" class="form-control" id="iva" name="iva" placeholder="iva" value="<?php echo $fila["iva"]; ?>">
+                            <input type="number" class="form-control" id="iva" name="iva" step="0.1" value="<?php echo $fila["iva"]; ?>">
                         </div>
 
                         <div class="mb-3">
-                            <label for="precio" class="form-label">Precio</label>
+                            <label for="precio" class="form-label">precio</label>
                             <span id="precio_error" class="text-danger"></span>
-                            <input type="text" class="form-control" id="precio" name="precio" placeholder="precio" value="<?php echo $fila["precio"]; ?>">
+                            <input type="number" class="form-control" id="precio" name="precio" step="0.1" value="<?php echo $fila["precio"]; ?>">
                         </div>
 
                         <div class="mb-3">
@@ -85,225 +115,132 @@
 
                     </form>
                 </div>
-
-
-
             </main>
         </div>
     </div>
-    <?php include("scripts.php"); ?>
-    <script>
-        $(document).ready(function() {
+    <?php include("scripts.php");?> 
+      <script>
+$( document ).ready(function() {
+   
+    $("#btnform1").click(function(){
+       // Swal.fire("SweetAlert2 is working!");
+         let id=$("#id").val();  
+                let id_facturas=$("#id_facturas").val();  
+                let id_productos=$("#id_productos").val();
 
-            $("#btnform1").click(function() {
-                // Swal.fire("SweetAlert2 is working!");
-                let id_facturas = $("#id_facturas").val();
-                let id_productos = $("#id_productos").val();
-                let cantidad = $("#cantidad").val();
-                let precio_unitario = $("#precio_unitario").val();
-                let base = $("#base").val();
-                let descuento = $("#descuento").val();
-                let iva = $("#iva").val();
-                let precio = $("#precio").val();
-                let error = 0;
-
-                if (id_facturas == "") {
-                    error = 1;
-                    $("#id_facturas_error").html("Debe introducir un id");
-                    $("#id_facturas").addClass("borderError");
-                }
-
-                if (id_productos == "") {
-                    error = 1;
-                    $("#id_productos_error").html("Debe introducir un id producto");
-                    $("#id_productos").addClass("borderError");
-                }
-
-                if (cantidad == "") {
-                    error = 1;
-                    $("#cantidad_error").html("Debe introducir una cantidad");
-                    $("#cantidad").addClass("borderError");
-                }
-
-                if (precio_unitario == "") {
-                    error = 1;
-                    $("#precio_unitario_error").html("Debe introducir un precio unitario");
-                    $("#precio_unitario").addClass("borderError");
-                }
-
-                if (base == "") {
-                    error = 1;
-                    $("#base_error").html("Debe introducir una base");
-                    $("#base").addClass("borderError");
-                }
-
-                if (descuento == "") {
-                    error = 1;
-                    $("#descuento_error").html("Debe introducir un descuento");
-                    $("#descuento").addClass("borderError");
-                }
-
-                if (iva == "") {
-                    error = 1;
-                    $("#iva_error").html("Debe introducir un iva");
-                    $("#iva").addClass("borderError");
-                }
-
-                if (precio == "") {
-                    error = 1;
-                    $("#precio_error").html("Debe introducir un precio");
-                    $("#precio").addClass("borderError");
-                }
-
-                if (error == 0) {
-                    $.ajax({
-                        data: {
-                            id_facturas: id_facturas,
-                            id_productos: id_productos,
-                            cantidad: cantidad,
-                            precio_unitario: precio_unitario,
-                            base: base,
-                            descuento: descuento,
-                            iva: iva,
-                            precio: precio
-                        },
-                        method: "POST",
-                        url: "lineas_facturas_update.php",
-                        success: function(result) {
-
-                            if (result == 1) {
-                                //alert("Datos insertados correctamente!");
-                                let timerInterval;
-                                Swal.fire({
-                                    title: "Datos actualizados correctamente!",
-                                    html: "",
-                                    timer: 2000,
-                                    timerProgressBar: true,
-                                    didOpen: () => {
-                                        Swal.showLoading();
-                                        const timer = Swal.getPopup().querySelector("b");
-                                        timerInterval = setInterval(() => {
-                                            timer.textContent = `${Swal.getTimerLeft()}`;
-                                        }, 100);
-                                    },
-                                    willClose: () => {
-                                        clearInterval(timerInterval);
-                                    }
-                                }).then((result) => {
-                                    /* Read more about handling dismissals below */
-                                    if (result.dismiss === Swal.DismissReason.timer) {
-                                        location.href = "lineas_facturas.php";
-                                    }
-                                });
-                                //location.href="facturas.php";
-                            } else {
-                                Swal.fire("No Insertado correctamente!");
-
-                            }
-                        }
-                    });
-                }
-
-            });
-        });
-
-        $("#id_facturas").on('keyup', function() {
-            $("#errorV").html("");
-            var value = $(this).val().length;
-            if (value > 0) {
-                $("#id_facturas_error").html("");
-                $("#id_facturas").removeClass("borderError");
-            } else {
-                $("#id_facturas_error").html("Debe introducir un id");
+                let cantidad=$("#cantidad").val();
+                let precio_unitario=$("#precio_unitario").val();
+                let base=$("#base").val();
+                let descuento=$("#descuento").val();
+                let iva=$("#iva").val();
+                let precio=$("#precio").val();
+let error=0;
+          
+           if(id_facturas==""){
+               
+               error=1;
+               $("#id_facturas_error").html("Debe introducir una factura");
                 $("#id_facturas").addClass("borderError");
-            }
-        })
+           }
+        
+           if(id_productos==""){
+               
+               error=1;
+               $("#id_productos_error").html("Debe introducir un producto");
+               $("#id_productos").addClass("borderError");
+           }
+        
+        if(cantidad==""){
+               
+               error=1;
+               $("#cantidad_error").html("Debe introducir una cantidad");
+               $("#cantidad").addClass("borderError");
+           }
+        
+        if(precio_unitario==""){
+               
+               error=1;
+               $("#precio_unitario_error").html("Debe introducir un precio unitario");
+               $("#precio_unitario").addClass("borderError");
+           }
+        
+        if(base==""){
+               
+               error=1;
+               $("#base_error").html("Debe introducir una  base imponible");
+               $("#base").addClass("borderError");
+           }
+        
+        if(iva==""){
+               
+               error=1;
+               $("#iva_error").html("Debe introducir un iva");
+               $("#iva").addClass("borderError");
+           }
+        if(precio==""){
+               
+               error=1;
+               $("#precio_error").html("Debe introducir un precio");
+               $("#precio").addClass("borderError");
+           }
+        if(error==0){
+            //$("#form1").submit();
+             $.ajax({
+               
+                 data:
+                {id_facturas:id_facturas,id_productos:id_productos,cantidad:cantidad,precio_unitario:precio_unitario,base:base,descuento:descuento,iva:iva,precio:precio,id:id},
+                 method:"POST",
+                 url: "lineas_facturas_update.php", 
+                 success: function(result){
+                   
+                     if(result==1){
+                         //alert("Datos insertados correctamente!");
+                       let timerInterval;
+                            Swal.fire({
+                              title: "Datos actualizados correctamente!",
+                              html: "",
+                              timer: 2000,
+                              timerProgressBar: true,
+                              didOpen: () => {
+                                Swal.showLoading();
+                                const timer = Swal.getPopup().querySelector("b");
+                                timerInterval = setInterval(() => {
+                                  timer.textContent = `${Swal.getTimerLeft()}`;
+                                }, 100);
+                              },
+                              willClose: () => {
+                                clearInterval(timerInterval);
+                              }
+                            }).then((result) => {
+                              /* Read more about handling dismissals below */
+                              if (result.dismiss === Swal.DismissReason.timer) {
+                                location.href="lineas_facturas.php";
+                              }
+                            });
+                          //location.href="clientes.php";
+                     }else{
+                          Swal.fire("No Insertado correctamente!");
+                        
+                     }
+                }
+             });
+        }
+         
+    });
+    
+    $("#id_productos").change(function(){
+        alert("buscar precio");
+    });
 
-        $("#id_productos").on('keyup', function() {
-            $("#errorV").html("");
-            var value = $(this).val().length;
-            if (value > 0) {
-                $("#id_productos_error").html("");
-                $("#id_productos").removeClass("borderError");
-            } else {
-                $("#id_productos_error").html("Debe introducir un id");
-                $("#id_productos").addClass("borderError");
-            }
-        })
-
-        $("#cantidad").on('keyup', function() {
-            $("#errorV").html("");
-            var value = $(this).val().length;
-            if (value > 0) {
-                $("#cantidad_error").html("");
-                $("#cantidad").removeClass("borderError");
-            } else {
-                $("#cantidad_error").html("Debe introducir una cantidad de producto");
-                $("#cantidad").addClass("borderError");
-            }
-        })
 
 
-        $("#precio_unitario").on('keyup', function() {
-            $("#errorV").html("");
-            var value = $(this).val().length;
-            if (value > 0) {
-                $("#precio_unitario_error").html("");
-                $("#precio_unitario").removeClass("borderError");
-            } else {
-                $("#iprecio_unitario_error").html("Debe introducir un precio unitario");
-                $("#precio_unitario").addClass("borderError");
-            }
-        })
 
-        $("#base").on('keyup', function() {
-            $("#errorV").html("");
-            var value = $(this).val().length;
-            if (value > 0) {
-                $("#base_error").html("");
-                $("#base").removeClass("borderError");
-            } else {
-                $("#base_error").html("Debe introducir una base");
-                $("#base").addClass("borderError");
-            }
-        })
 
-        $("#descuento").on('keyup', function() {
-            $("#errorV").html("");
-            var value = $(this).val().length;
-            if (value > 0) {
-                $("#descuento_error").html("");
-                $("#descuento").removeClass("borderError");
-            } else {
-                $("#descuento_error").html("Debe introducir un descuento");
-                $("#descuento").addClass("borderError");
-            }
-        })
 
-        $("#iva").on('keyup', function() {
-            $("#errorV").html("");
-            var value = $(this).val().length;
-            if (value > 0) {
-                $("#iva_error").html("");
-                $("#iva").removeClass("borderError");
-            } else {
-                $("#iva_error").html("Debe introducir un iva");
-                $("#iva").addClass("borderError");
-            }
-        })
 
-        $("#precio").on('keyup', function() {
-            $("#errorV").html("");
-            var value = $(this).val().length;
-            if (value > 0) {
-                $("#precio_error").html("");
-                $("#precio").removeClass("borderError");
-            } else {
-                $("#precio_error").html("Debe introducir un precio");
-                $("#precio").addClass("borderError");
-            }
-        })
-    </script>
+    
+});      
+      
+</script>
 </body>
-
 </html>

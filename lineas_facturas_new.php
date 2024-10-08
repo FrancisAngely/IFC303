@@ -23,14 +23,47 @@
 
               <label for="id_facturas" class="form-label">Id factura</label>
               <span id="id_facturas_error" class="text-danger"></span>
-              <input type="text" class="form-control" id="id_facturas" name="id_facturas" placeholder="id factura">
+
+
+              <select class="form-control select2" id="id_facturas" name="id_facturas">
+                <option></option>
+                <?php
+                include("db.php");
+                $sqlFact = "SELECT `id`, `fecha`, `id_clientes`, `created_at`, `updated_at` FROM `facturas` WHERE 1";
+                $resultFact = $mysqli->query($sqlFact);
+                if ($resultFact->num_rows > 0) {
+                  while ($filaFact = $resultFact->fetch_assoc()) {
+                ?>
+                    <option value="<?php echo $filaFact["id"]; ?>"><?php echo $filaFact["id"]; ?>-<?php echo $filaFact["fecha"]; ?></option>
+                <?php
+                  }
+                }
+                ?>
+
+              </select>
             </div>
 
 
             <div class="mb-3">
               <label for="id_productos" class="form-label">Id producto</label>
               <span id="id_productos_error" class="text-danger"></span>
-              <input type="text" class="form-control" id="id_productos" name="id_productos" placeholder="id productos">
+
+              <select class="form-control select2" id="id_productos" name="id_productos">
+                <option></option>
+                <?php
+
+                $sqlProd = "SELECT `id`, `producto`, `imagen`, `precio`, `iva`, `stock`, `created_at`, `updated_at` FROM `productos` WHERE 1";
+                $resultProd = $mysqli->query($sqlProd);
+                if ($resultProd->num_rows > 0) {
+                  while ($filaProd = $resultProd->fetch_assoc()) {
+                ?>
+                    <option value="<?php echo $filaProd["id"]; ?>"><?php echo $filaProd["producto"]; ?></option>
+                <?php
+                  }
+                }
+                ?>
+
+              </select>
             </div>
 
             <div class="mb-3">
@@ -161,10 +194,11 @@
               iva: iva,
               precio: precio
             },
+
             method: "POST",
             url: "lineas_facturas_insert.php",
             success: function(result) {
-
+              alert(result);
               if (result > 1) {
                 //alert("Datos insertados correctamente!");
                 let timerInterval;
@@ -296,6 +330,13 @@
         $("#precio").addClass("borderError");
       }
     })
+
+    $("#id_productos").change(function(){
+       //alert("buscar precio");
+           
+    });
+
+
   </script>
 </body>
 
