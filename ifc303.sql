@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 07-10-2024 a las 19:13:36
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+-- Host: 127.0.0.1
+-- Generation Time: Oct 08, 2024 at 05:53 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `ifc303`
+-- Database: `ifc303`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `clientes`
+-- Table structure for table `clientes`
 --
 
 CREATE TABLE `clientes` (
@@ -36,21 +36,20 @@ CREATE TABLE `clientes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
--- Volcado de datos para la tabla `clientes`
+-- Dumping data for table `clientes`
 --
 
 INSERT INTO `clientes` (`id`, `nombre`, `apellidos`, `created_at`, `updated_at`) VALUES
-(1, 'a', 'adcsdoa', '2024-09-30 03:44:13', '2024-10-01 04:17:19'),
-(7, 'q', 'q', '2024-09-30 04:28:00', '2024-09-30 04:28:00'),
-(8, 'a', 'a', '2024-09-30 04:28:32', '2024-09-30 04:28:32'),
-(9, 'fff', 'ffff', '2024-09-30 04:44:57', '2024-09-30 04:44:57'),
-(10, 's', 's', '2024-09-30 04:46:31', '2024-09-30 04:46:31'),
-(11, 'a', 'a', '2024-09-30 04:48:28', '2024-09-30 04:48:28');
+(1, 'Francis', 'Gamboa', '2024-09-30 03:44:13', '2024-10-08 04:23:12'),
+(2, 'Bruno', 'Caceres', '2024-09-30 04:28:00', '2024-10-08 04:23:25'),
+(3, 'Bonifacio', 'Landaeta', '2024-09-30 04:28:32', '2024-10-08 04:23:38'),
+(4, 'Maria', 'Tierras', '2024-09-30 04:44:57', '2024-10-08 04:24:10'),
+(5, 'Homero', 'Simpson', '2024-09-30 04:46:31', '2024-10-08 04:24:24');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `direcciones_proveedores`
+-- Table structure for table `direcciones_proveedores`
 --
 
 CREATE TABLE `direcciones_proveedores` (
@@ -65,19 +64,18 @@ CREATE TABLE `direcciones_proveedores` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
--- Volcado de datos para la tabla `direcciones_proveedores`
+-- Dumping data for table `direcciones_proveedores`
 --
 
 INSERT INTO `direcciones_proveedores` (`id`, `id_proveedor`, `direccion`, `localidad`, `provincia`, `cp`, `created_at`, `updated_at`) VALUES
-(1, 1, 'CALLE 1', 'ZARAGOZA', 'ZARAGOZA', '50018', '2024-09-24 19:39:29', '2024-09-24 19:39:29'),
-(3, 0, '', '', '', '', '2024-10-01 07:26:02', '2024-10-01 07:26:02'),
-(4, 1, 'calle 2', '54', '02', '50002', '2024-10-02 06:41:10', '2024-10-03 06:37:51'),
-(5, 1, 'sdasdasdasd', '52', '02', '5841321', '2024-10-07 04:20:44', '2024-10-07 04:20:44');
+(1, 1, 'Calle de Andalucia - 34', '6071', '41', '89600', '2024-09-24 19:39:29', '2024-10-08 04:26:13'),
+(2, 5, 'Avenida Independencia', '8113', '50', '50002', '2024-10-02 06:41:10', '2024-10-08 04:26:34'),
+(3, 6, 'Avenida San Miguel ', '7836', '50', '5000978', '2024-10-07 04:20:44', '2024-10-08 04:27:02');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `facturas`
+-- Table structure for table `facturas`
 --
 
 CREATE TABLE `facturas` (
@@ -89,17 +87,18 @@ CREATE TABLE `facturas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
--- Volcado de datos para la tabla `facturas`
+-- Dumping data for table `facturas`
 --
 
 INSERT INTO `facturas` (`id`, `fecha`, `id_clientes`, `created_at`, `updated_at`) VALUES
-(1, '2024-10-04', 2, '2024-10-07 04:48:45', '2024-10-07 04:57:04'),
-(3, '2024-10-03', 1, '2024-10-07 04:48:47', '2024-10-07 04:48:47');
+(1, '2024-09-30', 1, '2024-10-07 04:48:45', '2024-10-08 04:28:18'),
+(2, '2024-07-31', 2, '2024-10-07 04:48:47', '2024-10-08 04:28:28'),
+(3, '2024-10-20', 3, '2024-10-08 04:05:50', '2024-10-08 04:28:36');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `lineas_facturas`
+-- Table structure for table `lineas_facturas`
 --
 
 CREATE TABLE `lineas_facturas` (
@@ -117,18 +116,18 @@ CREATE TABLE `lineas_facturas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
--- Volcado de datos para la tabla `lineas_facturas`
+-- Dumping data for table `lineas_facturas`
 --
 
 INSERT INTO `lineas_facturas` (`id`, `id_facturas`, `id_productos`, `cantidad`, `precio_unitario`, `base`, `descuento`, `iva`, `precio`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 2100, 20, 19, 10, 21, 5000, '2024-10-07 06:41:36', '2024-10-07 06:41:36'),
-(5, 0, 0, 0, 0, 0, 0, 0, 0, '2024-10-07 06:50:57', '2024-10-07 06:50:57'),
-(6, 2, 0, 12503, 20, 253, 10, 21, 96322000, '2024-10-07 06:51:48', '2024-10-07 06:51:48');
+(1, 1, 1, 2, 20, 20000, 10, 21, 50000, '2024-10-07 06:41:36', '2024-10-08 04:29:47'),
+(2, 2, 2, 2, 2, 20, 2, 21, 25000, '2024-10-07 06:50:57', '2024-10-08 04:30:12'),
+(3, 3, 3, 1, 50, 253, 10, 21, 50000, '2024-10-08 04:59:35', '2024-10-08 05:01:22');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `localidades`
+-- Table structure for table `localidades`
 --
 
 CREATE TABLE `localidades` (
@@ -142,7 +141,7 @@ CREATE TABLE `localidades` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
--- Volcado de datos para la tabla `localidades`
+-- Dumping data for table `localidades`
 --
 
 INSERT INTO `localidades` (`id`, `id_provincias`, `cmun`, `dc`, `localidad`, `cretead_at`, `updated_at`) VALUES
@@ -8280,7 +8279,7 @@ INSERT INTO `localidades` (`id`, `id_provincias`, `cmun`, `dc`, `localidad`, `cr
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `productos`
+-- Table structure for table `productos`
 --
 
 CREATE TABLE `productos` (
@@ -8295,22 +8294,22 @@ CREATE TABLE `productos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
--- Volcado de datos para la tabla `productos`
+-- Dumping data for table `productos`
 --
 
 INSERT INTO `productos` (`id`, `producto`, `imagen`, `precio`, `iva`, `stock`, `created_at`, `updated_at`) VALUES
-(2, 'p1', 'img1', 12, 12, 1, '2024-09-23 04:33:37', '2024-09-23 04:33:37'),
-(3, '', 'productos/producto_3.png', 1, 1, 1, '2024-09-23 04:47:01', '2024-09-23 04:47:01'),
-(4, '2222', 'productos/producto_4.png', 2, 2, 2, '2024-09-23 04:49:52', '2024-09-23 04:49:52'),
-(5, 'p1', 'productos/producto_5.png', 1, 1, 1, '2024-09-23 04:50:19', '2024-09-23 04:50:19'),
-(6, '', 'productos/producto_6.png', 0, 0, 0, '2024-09-23 04:51:12', '2024-09-23 04:51:12'),
-(7, '', 'productos/producto_7.png', 0, 0, 0, '2024-09-23 04:52:07', '2024-09-23 04:52:07'),
-(8, '', 'productos/producto_8.png', 0, 0, 0, '2024-09-23 04:52:31', '2024-09-23 05:34:33');
+(1, 'Producto-1', 'img1', 12, 12, 1, '2024-09-23 04:33:37', '2024-09-23 04:33:37'),
+(2, 'Producto-2', 'productos/producto_3.png', 1, 21, 1, '2024-09-23 04:47:01', '2024-09-23 04:47:01'),
+(3, 'Producto-3', 'productos/producto_4.png', 2, 21, 2, '2024-09-23 04:49:52', '2024-09-23 04:49:52'),
+(4, 'Producto-4', 'productos/producto_5.png', 1, 11, 1, '2024-09-23 04:50:19', '2024-09-23 04:50:19'),
+(5, 'Producto-5', 'productos/producto_6.png', 11, 21, 0, '2024-09-23 04:51:12', '2024-09-23 04:51:12'),
+(6, 'Producto-6', 'productos/producto_7.png', 23, 21, 0, '2024-09-23 04:52:07', '2024-09-23 04:52:07'),
+(7, 'Producto-7', 'productos/producto_8.png', 78, 20, 0, '2024-09-23 04:52:31', '2024-09-23 05:34:33');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `proveedores`
+-- Table structure for table `proveedores`
 --
 
 CREATE TABLE `proveedores` (
@@ -8324,16 +8323,18 @@ CREATE TABLE `proveedores` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
--- Volcado de datos para la tabla `proveedores`
+-- Dumping data for table `proveedores`
 --
 
 INSERT INTO `proveedores` (`id`, `razon_social`, `nombre_comercial`, `cif`, `formapago`, `created_at`, `updated_at`) VALUES
-(1, 'EMPRESA SA', 'EMPRESA', 'B89006789', 'contado', '2024-09-24 06:54:00', '2024-09-24 06:58:20');
+(1, 'EMPRESA SA', 'EMPRESA', 'B89006789', 'contado', '2024-09-24 06:54:00', '2024-09-24 06:58:20'),
+(5, 'Movistar', 'Telefonica, C.A. ', 'A-53254354-DFSER', 'tarjeta', '2024-10-08 04:17:38', '2024-10-08 04:17:38'),
+(6, 'Cupido', 'Rest. Cupido Food', '87654321-ASDASDA', 'Transferencia', '2024-10-08 04:17:52', '2024-10-08 04:17:52');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `provincias`
+-- Table structure for table `provincias`
 --
 
 CREATE TABLE `provincias` (
@@ -8344,7 +8345,7 @@ CREATE TABLE `provincias` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
--- Volcado de datos para la tabla `provincias`
+-- Dumping data for table `provincias`
 --
 
 INSERT INTO `provincias` (`id`, `provincia`, `created_at`, `updated_at`) VALUES
@@ -8404,7 +8405,7 @@ INSERT INTO `provincias` (`id`, `provincia`, `created_at`, `updated_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `usuarios`
+-- Table structure for table `usuarios`
 --
 
 CREATE TABLE `usuarios` (
@@ -8419,121 +8420,123 @@ CREATE TABLE `usuarios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
--- Volcado de datos para la tabla `usuarios`
+-- Dumping data for table `usuarios`
 --
 
 INSERT INTO `usuarios` (`id`, `username`, `pass`, `nombre`, `apellidos`, `email`, `created_at`, `updated_at`) VALUES
-(1, 'luis', '123', 'Luis', 'Mena Tobar', 'luismenatobar@gmail.com', '2024-09-19 18:59:16', '2024-09-19 18:59:16');
+(1, 'luis', '123', 'Luis', 'Mena Tobar', 'luismenatobar@gmail.com', '2024-09-19 18:59:16', '2024-09-19 18:59:16'),
+(2, 'fagg', '12345', 'francis', 'Guerra', 'fgamboa@gmail.com', '2024-10-08 04:46:05', '2024-10-08 04:46:05'),
+(3, 'bj', 'asdf', 'Bruno', 'Caceres', 'bjcg@gmail.com', '2024-10-08 04:49:20', '2024-10-08 04:48:23');
 
 --
--- Índices para tablas volcadas
+-- Indexes for dumped tables
 --
 
 --
--- Indices de la tabla `clientes`
+-- Indexes for table `clientes`
 --
 ALTER TABLE `clientes`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `direcciones_proveedores`
+-- Indexes for table `direcciones_proveedores`
 --
 ALTER TABLE `direcciones_proveedores`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `facturas`
+-- Indexes for table `facturas`
 --
 ALTER TABLE `facturas`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `lineas_facturas`
+-- Indexes for table `lineas_facturas`
 --
 ALTER TABLE `lineas_facturas`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `localidades`
+-- Indexes for table `localidades`
 --
 ALTER TABLE `localidades`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `productos`
+-- Indexes for table `productos`
 --
 ALTER TABLE `productos`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `proveedores`
+-- Indexes for table `proveedores`
 --
 ALTER TABLE `proveedores`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `provincias`
+-- Indexes for table `provincias`
 --
 ALTER TABLE `provincias`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `usuarios`
+-- Indexes for table `usuarios`
 --
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT de las tablas volcadas
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT de la tabla `clientes`
+-- AUTO_INCREMENT for table `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 
 --
--- AUTO_INCREMENT de la tabla `direcciones_proveedores`
+-- AUTO_INCREMENT for table `direcciones_proveedores`
 --
 ALTER TABLE `direcciones_proveedores`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT de la tabla `facturas`
+-- AUTO_INCREMENT for table `facturas`
 --
 ALTER TABLE `facturas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT de la tabla `lineas_facturas`
+-- AUTO_INCREMENT for table `lineas_facturas`
 --
 ALTER TABLE `lineas_facturas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
--- AUTO_INCREMENT de la tabla `localidades`
+-- AUTO_INCREMENT for table `localidades`
 --
 ALTER TABLE `localidades`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8117;
 
 --
--- AUTO_INCREMENT de la tabla `productos`
+-- AUTO_INCREMENT for table `productos`
 --
 ALTER TABLE `productos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT de la tabla `proveedores`
+-- AUTO_INCREMENT for table `proveedores`
 --
 ALTER TABLE `proveedores`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT de la tabla `usuarios`
+-- AUTO_INCREMENT for table `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
