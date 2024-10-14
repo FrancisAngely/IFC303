@@ -123,10 +123,6 @@ if((!isset($_SESSION["valido"]))and($_SESSION["valido"]!="1")){
  <script src="node_modules/select2/dist/js/select2.js"></script>
 <link href="node_modules/select2/dist/css/select2.css" rel="stylesheet">
     
-        
-    <style>
-    .borderError{
-        border: 1px solid #ff0000;
-    }      
-</style>     
+   <link href="misestilos.css" rel="stylesheet">     
+     
   </head>

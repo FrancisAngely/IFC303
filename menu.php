@@ -30,15 +30,6 @@
                 Clientes
               </a>
             </li>
-
-            <li class="nav-item">
-          <a class="nav-link d-flex align-items-center gap-2" href="usuarios.php">
-            <svg class="bi">
-              <use xlink:href="#people2" />
-            </svg>
-            Usuarios
-          </a>
-        </li>
               
             <li class="nav-item">
               <a class="nav-link d-flex align-items-center gap-2" href="proveedores.php">
@@ -52,22 +43,20 @@
                 Proveedores direcciones
               </a>
             </li>
-
-            </li> 
+              
               <li class="nav-item">
               <a class="nav-link d-flex align-items-center gap-2" href="facturas.php">
-              <i class="fa-sharp-duotone fa-solid fa-file-invoice"></i>
+               <i class="fa-solid fa-file-invoice"></i>
                 Facturas
               </a>
             </li>
-
-           </li> 
+              
               <li class="nav-item">
-              <a class="nav-link d-flex align-items-center gap-2" href="lineas_facturas.php">
-              <i class="fa-solid fa-file-invoice"></i>
-                Lineas de factura
+              <a class="nav-link d-flex align-items-center gap-2" href="lineasfacturas.php">
+               <i class="fa-solid fa-file-invoice"></i>
+                Líneas Facturas
               </a>
-            </li>           
+            </li>
               
             <li class="nav-item">
               <a class="nav-link d-flex align-items-center gap-2" href="#">

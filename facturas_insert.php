@@ -3,7 +3,6 @@
 
 $fecha=$_POST["fecha"];
 $id_clientes=$_POST["id_clientes"];
-
 include("db.php");
 $sql="INSERT INTO `facturas`(`id`, `fecha`, `id_clientes`, `created_at`, `updated_at`) VALUES (";
 $sql.="'NULL'";
@@ -15,4 +14,5 @@ $sql.=")";
 
 if($mysqli->query($sql)) echo $mysqli->insert_id;
 else echo 0;
+//header("location:clientes.php");
 ?>

@@ -16,10 +16,8 @@
          
       </div>
 <div class="col-4">
-     
-    <form action="#" method="post" enctype="multipart/form-data">
+    <form action="#" method="post" enctype="multipart/form-data" id="form1">
 <div class="mb-3">
-
   <label for="fecha" class="form-label">Fecha</label>
      <span id="fecha_error" class="text-danger"></span>
   <input type="date" class="form-control" id="fecha" name="fecha" placeholder="fecha">
@@ -27,48 +25,61 @@
 
     
 <div class="mb-3">
-  <label for="id_clientes" class="form-label">Id Clientes</label>
+  <label for="id_clientes" class="form-label">id_clientes</label>
      <span id="id_clientes_error" class="text-danger"></span>
-  <input type="text" class="form-control" id="id_clientes" name="id_clientes" placeholder="id_cliente">
-</div>        
-    
+  <select class="form-control select2" id="id_clientes" name="id_clientes" >
+      <option></option>
+        <?php
+      include("db.php");
+        $sqlClientes="SELECT `id`, `nombre`, `apellidos`, `created_at`, `updated_at` FROM `clientes`  ORDER BY apellidos,nombre";
+        $resultClientes=$mysqli->query($sqlClientes);
+        if($resultClientes->num_rows>0){
+            while($filaClientes=$resultClientes->fetch_assoc()){
+                ?>
+                <option value="<?php echo $filaClientes["id"];?>"><?php echo $filaClientes["apellidos"];?>, <?php echo $filaClientes["nombre"];?></option>
+        <?php
+            }
+        }
+        ?>
+        
+    </select>
+</div>
+   
 <div class="mb-3"> 
   <input type="button" class="form-control" value="Aceptar" id="btnform1">
 </div>
     
     </form>
- </div>         
-  
+ </div>       
+      
+
+      
     </main>
   </div>
 </div>
- <?php include("scripts.php");?>     
-      
+ <?php include("scripts.php");?> 
       <script>
 $( document ).ready(function() {
    
     $("#btnform1").click(function(){
        // Swal.fire("SweetAlert2 is working!");
-        
- 
-            let fecha=$("#fecha").val();  
-            let id_clientes=$("#id_clientes").val();
+           let fecha=$("#fecha").val();  
+           let id_clientes=$("#id_clientes").val();
             let error=0;
           
            if(fecha==""){
                
                error=1;
-               $("#fecha_error").html("Debe introducir una fecha");
+               $("#fecha_error").html("Debe introducir un fecha");
                 $("#fecha").addClass("borderError");
            }
         
            if(id_clientes==""){
                
                error=1;
-               $("#id_clientes_error").html("Debe introducir un id cliente");
+               $("#id_clientes_error").html("Debe introducir los id_clientes");
                $("#id_clientes").addClass("borderError");
            }
-        
         if(error==0){
             //$("#form1").submit();
              $.ajax({
@@ -76,8 +87,8 @@ $( document ).ready(function() {
                  method:"POST",
                  url: "facturas_insert.php", 
                  success: function(result){
-                    
-                     if(result>1){
+                    //alert(result);
+                     if(result>=1){
                          //alert("Datos insertados correctamente!");
                        let timerInterval;
                             Swal.fire({
@@ -110,17 +121,45 @@ $( document ).ready(function() {
              });
         }
          
-    });  
-});     
-
-$("#fecha").on('keyup', function(){
+    });
+    
+    
+    
+      $("#id_clientes").change(function(){
+          let id_clientes=$("#id_clientes").val();
+          if(id_clientes==""){
+               
+               error=1;
+               $("#id_clientes_error").html("Debe introducir los id_clientes");
+               $("#id_clientes").addClass("borderError");
+           }else{
+               $("#id_clientes_error").html("");
+                $("#id_clientes").removeClass("borderError");
+           }
+    }); 
+       
+    
+    $("#fecha").change(function(){
+          let fecha=$("#fecha").val();
+          if(fecha==""){
+               
+               error=1;
+               $("#fecha_error").html("Debe introducir una fecha");
+               $("#fecha").addClass("borderError");
+           }else{
+               $("#fecha_error").html("");
+                $("#fecha").removeClass("borderError");
+           }
+    }); 
+    
+     $("#fecha").on('keyup', function(){
          $("#errorV").html("");
         var value = $(this).val().length;
         if(value>0){
             $("#fecha_error").html("");
             $("#fecha").removeClass("borderError");
         }else{
-           $("#fecha_error").html("Debe introducir una fecha");
+           $("#fecha_error").html("Debe introducir un fecha de usuario");
            $("#fecha").addClass("borderError"); 
         }
     })
@@ -132,11 +171,13 @@ $("#fecha").on('keyup', function(){
             $("#id_clientes_error").html("");
             $("#id_clientes").removeClass("borderError");
         }else{
-           $("#id_clientes_error").html("Debe introducir un id");
+           $("#id_clientes_error").html("Debe introducir una id_clientes");
            $("#id_clientes").addClass("borderError"); 
         }
     })
     
+});      
+      
 </script>
 </body>
 </html>

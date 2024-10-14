@@ -5,7 +5,7 @@ $fecha=$_POST["fecha"];
 $id_clientes=$_POST["id_clientes"];
 
 include("db.php");
-$sql="UPDATE `facturas` SET `id`='".$id."',`fecha`='".$fecha."',`id_clientes`='".$id_clientes."',`updated_at`='".date("Y-m-d h:i:s")."' WHERE `id`='".$id."'";
+$sql="UPDATE `facturas` SET `fecha`='".$fecha."',`id_clientes`='".$id_clientes."',`updated_at`='".date("Y-m-d h:i:s")."' WHERE `id`='".$id."'";
 
 
 if($mysqli->query($sql)) echo 1;

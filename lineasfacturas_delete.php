@@ -4,7 +4,7 @@ $id=$_GET["id"];
 
 
 include("db.php");
-$sql="DELETE FROM `facturas` WHERE `id`='".$id."'";
+$sql="DELETE FROM `lineasfacturas` WHERE `id`='".$id."'";
 
 
 if($mysqli->query($sql))echo 1;
