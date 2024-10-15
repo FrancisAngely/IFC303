@@ -100,13 +100,13 @@ $sql="SELECT `id`, `fecha`, `id_clientes`, `created_at`, `updated_at` FROM `fact
 
    
         
- <div class="row mt-3 bg-secondary text-white p-2 mb-2">     
+ <div class="row mt-3 bg-secondary text-white p-2 mb-2"  data-indice="<?php echo $indice;?>">     
  
     
 <div class="col-md-6">
   <label for="id_productos<?php echo $indice;?>" class="form-label">Producto</label>
      <span id="id_productos_error<?php echo $indice;?>" class="text-danger"></span>
-  <select class="form-control select2 changeProducto" id="id_productos<?php echo $indice;?>" name="id_productos<?php echo $indice;?>" data-indice="<?php echo $indice;?>">
+  <select class="form-control select2 changeProducto" id="id_productos<?php echo $indice;?>" name="id_productos<?php echo $indice;?>">
       <option></option>
         <?php
      
@@ -131,7 +131,7 @@ $sql="SELECT `id`, `fecha`, `id_clientes`, `created_at`, `updated_at` FROM `fact
 <div class="col-md-3">
   <label for="cantidad<?php echo $indice;?>" class="form-label">Cantidad</label>
      <span id="cantidad_error<?php echo $indice;?>" class="text-danger"></span>
-  <input type="number" class="form-control" id="cantidad<?php echo $indice;?>" name="cantidad<?php echo $indice;?>" step="1" value="<?php echo $cantidad;?>">
+  <input type="number" class="form-control calculaPrecio" id="cantidad<?php echo $indice;?>" name="cantidad<?php echo $indice;?>" step="1" value="<?php echo $cantidad;?>">
 </div>   
 
      <div class="col-md-3">&nbsp;</div>
@@ -139,25 +139,25 @@ $sql="SELECT `id`, `fecha`, `id_clientes`, `created_at`, `updated_at` FROM `fact
 <div class="col-md-2">
   <label for="preciounitario<?php echo $indice;?>" class="form-label">precio unitario</label>
      <span id="preciounitario_error<?php echo $indice;?>" class="text-danger"></span>
-  <input type="number" class="form-control" id="preciounitario<?php echo $indice;?>" name="preciounitario<?php echo $indice;?>" step="0.1" value="<?php echo $preciounitario;?>">
+  <input type="number" class="form-control calculaPrecio" id="preciounitario<?php echo $indice;?>" name="preciounitario<?php echo $indice;?>" step="0.1" value="<?php echo $preciounitario;?>">
 </div>   
         
 <div class="col-md-2">
   <label for="base<?php echo $indice;?>" class="form-label">base imp</label>
      <span id="base_error<?php echo $indice;?>" class="text-danger"></span>
-  <input type="number" class="form-control" id="base<?php echo $indice;?>" name="base<?php echo $indice;?>" step="0.1" value="<?php echo $base;?>">
+  <input type="number" class="form-control calculaPrecio" id="base<?php echo $indice;?>" name="base<?php echo $indice;?>" step="0.1" value="<?php echo $base;?>">
 </div>     
         
 <div class="col-md-2">
   <label for="descuento<?php echo $indice;?>" class="form-label">descuento</label>
      <span id="descuento_error<?php echo $indice;?>" class="text-danger"></span>
-  <input type="number" class="form-control" id="descuento<?php echo $indice;?>" name="descuento<?php echo $indice;?>" step="0.1" value="<?php echo $descuento;?>">
+  <input type="number" class="form-control calculaPrecio" id="descuento<?php echo $indice;?>" name="descuento<?php echo $indice;?>" step="0.1" value="<?php echo $descuento;?>">
 </div>  
         
 <div class="col-md-2">
   <label for="iva<?php echo $indice;?>" class="form-label">iva</label>
      <span id="iva_error<?php echo $indice;?>" class="text-danger"></span>
-  <input type="number" class="form-control" id="iva<?php echo $indice;?>" name="iva<?php echo $indice;?>" step="0.1" value="<?php echo $iva;?>">
+  <input type="number" class="form-control calculaPrecio" id="iva<?php echo $indice;?>" name="iva<?php echo $indice;?>" step="0.1" value="<?php echo $iva;?>">
 </div>  
         
 <div class="col-md-2">
@@ -196,16 +196,34 @@ $( document ).ready(function() {
         let id=$("#id").val();  
         let fecha=$("#fecha").val();  
         let id_clientes=$("#id_clientes").val();
-
-        let id_productos=$("#id_productos").val();
-        let cantidad=$("#cantidad").val();
-        let preciounitario=$("#preciounitario").val();
-        let base=$("#base").val();
-        let descuento=$("#descuento").val();
-        let iva=$("#iva").val();
-        let idlinea=$("#idlinea").val();
+     /*   let data=new FormData();
+    
+        data.append("fecha",fecha);
+        data.append("id_clientes",id_clientes);
+        data.append("id",id);
         
-         let precio=$("#precio").val();
+        
+        <?php for($i=1;$i<=$numLineas;$i++){?>
+   
+       
+            data.append("id_productos<?php echo $i;?>",$("#id_productos<?php echo $i;?>").val());
+            data.append("cantidad<?php echo $i;?>",$("#cantidad<?php echo $i;?>").val());
+            data.append("preciounitario<?php echo $i;?>",$("#preciounitario<?php echo $i;?>").val());
+            data.append("base<?php echo $i;?>",$("#base<?php echo $i;?>").val());
+            data.append("descuento<?php echo $i;?>",$("#descuento<?php echo $i;?>").val());
+            data.append("iva<?php echo $i;?>",$("#iva<?php echo $i;?>").val());
+            data.append("precio<?php echo $i;?>",$("#precio<?php echo $i;?>").val());
+            data.append("idlinea<?php echo $i;?>",$("#idlinea<?php echo $i;?>").val());
+    
+        <?php }?>
+     
+        
+        data.append("numLineas",<?php echo $numLineas;?>);
+        
+         */
+       
+    
+                       
             let error=0;
           
            if(fecha==""){
@@ -224,9 +242,12 @@ $( document ).ready(function() {
         if(error==0){
             //$("#form1").submit();
              $.ajax({
-                 data:{fecha:fecha,id_clientes:id_clientes,id:id,id_productos:id_productos,cantidad:cantidad,preciounitario:preciounitario,base:base,descuento:descuento,iva:iva,precio:precio,idlinea:idlinea},
+                 data:$("#form1").serialize(),
                  method:"POST",
-                 url: "facturas_update2.php", 
+                 processData: false, 
+                 contentType: false,
+                  cache: false,
+                 url: "facturas_update3.php", 
                  success: function(result){
                     alert(result);
                      if(result>=1){
@@ -297,8 +318,8 @@ $( document ).ready(function() {
     $(".changeProducto").change(function(){
        
         let id_productos=$(this).val();
-       
-        let indice=$(this).attr("data-indice");
+       //let linea=$(this).attr("data-indice");
+        let linea=$(this).parent().parent().attr("data-indice");
       
          $.ajax({
                
@@ -316,7 +337,26 @@ $( document ).ready(function() {
          });
     });
     
-  
+  $(".calculaPrecio").change(function(){
+       let linea=$(this).parent().parent().attr("data-indice");
+      
+        let cantidad=$("#cantidad"+linea).val();
+        let preciounitario=$("#preciounitario"+linea).val();
+        let base=$("#base"+linea).val();
+        let descuento=$("#descuento"+linea).val();
+        let iva=$("#iva"+linea).val();
+        let precio=0;
+        
+        base=cantidad*preciounitario;
+        $("#base"+linea).val(base);
+        descuento=base*descuento;
+        base=base-descuento;
+        iva=base*iva;
+       // descuento=(base+iva)*descuento;
+        precio=base+iva;
+        
+        $("#precio"+linea).val(precio);
+    });
    
 
     
