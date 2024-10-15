@@ -125,8 +125,7 @@ $sql="SELECT `id`, `fecha`, `id_clientes`, `created_at`, `updated_at` FROM `fact
         
     </select>
 </div>
- 
-        
+       
   
 <div class="col-md-3">
   <label for="cantidad<?php echo $indice;?>" class="form-label">Cantidad</label>
@@ -179,7 +178,8 @@ $sql="SELECT `id`, `fecha`, `id_clientes`, `created_at`, `updated_at` FROM `fact
   <input type="button" class="form-control" value="Aceptar" id="btnform1">
 </div>
     
-   
+    <input type="hidden" name="numLineas" value="<?php echo $numLineas;?>" id="numLineas">
+    
  </div>       
     </form>   
 
@@ -203,7 +203,7 @@ $( document ).ready(function() {
         data.append("id",id);
         
         
-        <?php for($i=1;$i<=$numLineas;$i++){?>
+        <?php //for($i=1;$i<=$numLineas;$i++){?>
    
        
             data.append("id_productos<?php echo $i;?>",$("#id_productos<?php echo $i;?>").val());
@@ -215,7 +215,7 @@ $( document ).ready(function() {
             data.append("precio<?php echo $i;?>",$("#precio<?php echo $i;?>").val());
             data.append("idlinea<?php echo $i;?>",$("#idlinea<?php echo $i;?>").val());
     
-        <?php }?>
+        <?php //}?>
      
         
         data.append("numLineas",<?php echo $numLineas;?>);
@@ -244,9 +244,9 @@ $( document ).ready(function() {
              $.ajax({
                  data:$("#form1").serialize(),
                  method:"POST",
-                 processData: false, 
+                /* processData: false, 
                  contentType: false,
-                  cache: false,
+                  cache: false,*/
                  url: "facturas_update3.php", 
                  success: function(result){
                     alert(result);
