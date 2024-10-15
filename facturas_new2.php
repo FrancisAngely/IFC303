@@ -144,7 +144,8 @@ $( document ).ready(function() {
            let fecha=$("#fecha").val();  
            let id_clientes=$("#id_clientes").val();
         
-        //LINEA PRODUCTO
+        //LINEA PRODUCTO 
+        <!--
                 let id_productos1=$("#id_productos1").val();
                 let cantidad1=$("#cantidad1").val();
                 let preciounitario1=$("#preciounitario1").val();
@@ -154,7 +155,7 @@ $( document ).ready(function() {
                 let precio1=$("#precio1").val();
         
         
-            let error=0;
+            let error=0; -->
           
            if(fecha==""){
                
