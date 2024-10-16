@@ -100,7 +100,7 @@ $sql="SELECT `id`, `fecha`, `id_clientes`, `created_at`, `updated_at` FROM `fact
 
    
         
- <div class="row mt-3 bg-secondary text-white p-2 mb-2">     
+ <div class="row mt-3 bg-secondary text-white p-2 mb-2" id="linea<?php echo $indice;?>">     
  
     
 <div class="col-md-6">
@@ -134,7 +134,8 @@ $sql="SELECT `id`, `fecha`, `id_clientes`, `created_at`, `updated_at` FROM `fact
   <input type="number" class="form-control" id="cantidad<?php echo $indice;?>" name="cantidad<?php echo $indice;?>" step="1" value="<?php echo $cantidad;?>">
 </div>   
 
-     <div class="col-md-3">&nbsp;</div>
+     <div class="col-md-2">&nbsp;</div>
+       <div class="col-md-1"><a href="#" id="btndelete<?php echo $indice;?>"><i class="fa-solid fa-trash text-danger"></i></a></div>
         
 <div class="col-md-2">
   <label for="preciounitario<?php echo $indice;?>" class="form-label">precio unitario</label>
@@ -172,7 +173,7 @@ $sql="SELECT `id`, `fecha`, `id_clientes`, `created_at`, `updated_at` FROM `fact
         }//while
     }//if
     ?>
-    
+    <input type="hidden" name="numLineas" value="<?php echo $numLineas;?>" id="numLineas">
     
    
 <div class="mb-3"> 
@@ -192,12 +193,13 @@ $sql="SELECT `id`, `fecha`, `id_clientes`, `created_at`, `updated_at` FROM `fact
 $( document ).ready(function() {
    
     $("#btnform1").click(function(){
+        
        // Swal.fire("SweetAlert2 is working!");
-        let id=$("#id").val();  
+       let id=$("#id").val();  
         let fecha=$("#fecha").val();  
         let id_clientes=$("#id_clientes").val();
 
-        let id_productos=$("#id_productos").val();
+        /* let id_productos=$("#id_productos").val();
         let cantidad=$("#cantidad").val();
         let preciounitario=$("#preciounitario").val();
         let base=$("#base").val();
@@ -205,7 +207,7 @@ $( document ).ready(function() {
         let iva=$("#iva").val();
         let idlinea=$("#idlinea").val();
         
-         let precio=$("#precio").val();
+         let precio=$("#precio").val();*/
             let error=0;
           
            if(fecha==""){
@@ -224,9 +226,9 @@ $( document ).ready(function() {
         if(error==0){
             //$("#form1").submit();
              $.ajax({
-                 data:{fecha:fecha,id_clientes:id_clientes,id:id,id_productos:id_productos,cantidad:cantidad,preciounitario:preciounitario,base:base,descuento:descuento,iva:iva,precio:precio,idlinea:idlinea},
+                 data:$("#form1").serialize(),
                  method:"POST",
-                 url: "facturas_update2.php", 
+                 url: "facturas_update4.php", 
                  success: function(result){
                     alert(result);
                      if(result>=1){
@@ -312,6 +314,11 @@ $( document ).ready(function() {
        
     
     ?>
+    
+     $("#btndelete<?php echo $indice;?>").click(function(){
+         $("#id_productos<?php echo $indice;?>").val('');
+         $("#linea<?php echo $indice;?>").hide();
+     });
     
 
     

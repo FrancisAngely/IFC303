@@ -125,7 +125,8 @@ $sql="SELECT `id`, `fecha`, `id_clientes`, `created_at`, `updated_at` FROM `fact
         
     </select>
 </div>
-       
+ 
+        
   
 <div class="col-md-3">
   <label for="cantidad<?php echo $indice;?>" class="form-label">Cantidad</label>
@@ -133,7 +134,8 @@ $sql="SELECT `id`, `fecha`, `id_clientes`, `created_at`, `updated_at` FROM `fact
   <input type="number" class="form-control calculaPrecio" id="cantidad<?php echo $indice;?>" name="cantidad<?php echo $indice;?>" step="1" value="<?php echo $cantidad;?>">
 </div>   
 
-     <div class="col-md-3">&nbsp;</div>
+     <div class="col-md-2">&nbsp;</div>
+       <div class="col-md-1"><a href="#" class="eliminar" ><i class="fa-solid fa-trash text-danger"></i></a></div>
         
 <div class="col-md-2">
   <label for="preciounitario<?php echo $indice;?>" class="form-label">precio unitario</label>
@@ -309,17 +311,13 @@ $( document ).ready(function() {
            $("#id_clientes").addClass("borderError"); 
         }
     })
-    
-    
-    
-
-   
+     
     
     $(".changeProducto").change(function(){
        
         let id_productos=$(this).val();
        //let linea=$(this).attr("data-indice");
-        let linea=$(this).parent().parent().attr("data-indice");
+        let indice=$(this).parent().parent().attr("data-indice");
       
          $.ajax({
                
@@ -358,7 +356,14 @@ $( document ).ready(function() {
         $("#precio"+linea).val(precio);
     });
    
-
+ $(".eliminar").click(function(){
+       let linea=$(this).parent().parent().attr("data-indice");
+      
+       $("#id_productos"+linea).val('');
+     $(this).parent().parent().hide();
+      
+    });
+   
     
     
     

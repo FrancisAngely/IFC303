@@ -25,6 +25,13 @@ $base=$_POST["base".$i];
 $descuento=$_POST["descuento".$i];
 $iva=$_POST["iva".$i];
 $precio=$_POST["precio".$i];
+    
+    
+if($id_productos==""){
+    $sql="DELETE FROM `lineasfacturas` WHERE id=".$id;
+    $mysqli->query($sql);
+}else{    
+    
 
 $sql="UPDATE `lineasfacturas` SET `id_facturas`='".$id_facturas."',`id_productos`='".$id_productos."',`updated_at`='".date("Y-m-d h:i:s")."' ";
 
@@ -37,7 +44,7 @@ $sql.=",`precio`='".$precio."'";
 
 $sql.=" WHERE `id`='".$id."'";
 $mysqli->query($sql);
-
+}
 }
 
 echo 1;
