@@ -4,6 +4,8 @@ $id=$_GET["id"];
 include("controller.php");
 echo EliminarCliente($id); 
 
+// echo delById("proveedores",$id); 
+
 /*include("db.php");
 $sql="DELETE FROM `clientes` WHERE `id`='".$id."'";
 if($mysqli->query($sql))echo 1;
