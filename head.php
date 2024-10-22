@@ -3,6 +3,9 @@ session_start();
 if((!isset($_SESSION["valido"]))and($_SESSION["valido"]!="1")){
     header("location:login.php");
 }
+
+include("controller.php"); 
+
 ?>
 
 <head><script src="js/color-modes.js"></script>

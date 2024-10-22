@@ -29,6 +29,11 @@
      <span id="id_clientes_error" class="text-danger"></span>
   <select class="form-control select2" id="id_clientes" name="id_clientes" >
       <option></option>
+
+
+
+
+      
         <?php
       include("db.php");
         $sqlClientes="SELECT `id`, `nombre`, `apellidos`, `created_at`, `updated_at` FROM `clientes`  ORDER BY apellidos,nombre";

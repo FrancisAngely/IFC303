@@ -1,6 +1,9 @@
 <?php
 //var_dump($_POST);
-$id=$_POST["id"];
+include("controller.php"); 
+echo ActualizarProveedor($_POST); 
+
+/*$id=$_POST["id"];
 $razon_social=$_POST["razon_social"];
 $nombre_comercial=$_POST["nombre_comercial"];
 $cif=$_POST["cif"];
@@ -11,6 +14,6 @@ $sql="UPDATE `proveedores` SET `razon_social`='".$razon_social."',`nombre_comerc
 
 
 if($mysqli->query($sql)) echo 1;
-else echo 0;
+else echo 0;*/
 //header("location:proveedores.php");
 ?>

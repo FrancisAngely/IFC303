@@ -1,7 +1,9 @@
 <?php
 //var_dump($_POST);
+include("controller.php"); 
+echo InsertarProveedor($_POST); 
 
-$razon_social=$_POST["razon_social"];
+/*$razon_social=$_POST["razon_social"];
 $nombre_comercial=$_POST["nombre_comercial"];
 $cif=$_POST["cif"];
 $formapago=$_POST["formapago"];
@@ -17,6 +19,6 @@ $sql.=",'".date("Y-m-d h:i:s")."'";
 $sql.=")";
 
 if($mysqli->query($sql)) echo $mysqli->insert_id;
-else echo 0;
+else echo 0;*/
 //header("location:proveedores.php");
 ?>

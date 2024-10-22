@@ -1,19 +1,24 @@
 <?php
 //var_dump($_POST);
-$id=$_POST["id"];
+
 $fecha=$_POST["fecha"];
 $id_clientes=$_POST["id_clientes"];
-$id_facturas=$id;
+
 
 $estado=1;
 
 include("db.php");
-$sql="UPDATE `facturas` SET `fecha`='".$fecha."',`id_clientes`='".$id_clientes."',`updated_at`='".date("Y-m-d h:i:s")."' WHERE `id`='".$id."'";
-if($mysqli->query($sql))$estado=1;else $estado=0;
+$sql="INSERT INTO `facturas`(`id`, `fecha`, `id_clientes`, `created_at`, `updated_at`) VALUES (";
+$sql.="'NULL'";
+$sql.=",'".$fecha."'";
+$sql.=",'".$id_clientes."'";
+$sql.=",'".date("Y-m-d h:i:s")."'";
+$sql.=",'".date("Y-m-d h:i:s")."'";
+$sql.=")";
 
+if($mysqli->query($sql)){
+    $id_facturas=$mysqli->insert_id;
 
-$sql="DELETE FROM `lineasfacturas` WHERE id_facturas=".$id_facturas;
-if($mysqli->query($sql))$estado=1;else $estado=0;
 
     
 $numLineas=$_POST["numLineas"];
@@ -52,6 +57,7 @@ $sql.=")";
 if($mysqli->query($sql))$estado=1;else $estado=0;
 }
 
+}
 }
 echo $estado;
 ?>

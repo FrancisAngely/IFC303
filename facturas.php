@@ -13,7 +13,7 @@
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Facturas</h1>
-          <a href="facturas_new.php" class="btn btn-primary">Nuevo</a>
+          <a href="facturas_new3.php" class="btn btn-primary">Nuevo</a>
       </div>
     <?php
        include("db.php"); 
@@ -38,7 +38,7 @@
             <td><?php echo $fila["id"];?></td>
             <td><?php echo $fila["fecha"];?></td>
             <td><?php echo $fila["cli"];?></td>
-            <td><a href="facturas_edit.php?id=<?php echo $fila["id"];?>"><i class="fa-solid fa-pen-to-square fa-2x"></i></a>
+            <td><a href="facturas_edit3.php?id=<?php echo $fila["id"];?>"><i class="fa-solid fa-pen-to-square fa-2x"></i></a>
             &nbsp;&nbsp;
             <a href="#" id="btndelete<?php echo $fila["id"];?>"><i class="fa-solid fa-trash text-danger"></i></a>
             </td>

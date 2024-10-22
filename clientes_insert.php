@@ -1,7 +1,9 @@
 <?php
 //var_dump($_POST);
+include("controller.php"); 
+echo InsertarCliente($_POST); 
 
-$nombre=$_POST["nombre"];
+/*$nombre=$_POST["nombre"];
 $apellidos=$_POST["apellidos"];
 include("db.php");
 $sql="INSERT INTO `clientes`(`id`, `nombre`, `apellidos`, `created_at`, `updated_at`) VALUES (";
@@ -13,6 +15,8 @@ $sql.=",'".date("Y-m-d h:i:s")."'";
 $sql.=")";
 
 if($mysqli->query($sql)) echo $mysqli->insert_id;
-else echo 0;
+else echo 0;*/
+
+
 //header("location:clientes.php");
 ?>

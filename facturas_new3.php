@@ -14,20 +14,11 @@
     <?php include("menu.php");?>
 <?php
  include("db.php");
-$sql="SELECT `id`, `fecha`, `id_clientes`, `created_at`, `updated_at` FROM `facturas` WHERE `id`=".$_GET["id"];
-    $query=$mysqli->query($sql);    
-    if($query->num_rows>0){
-        $fila=$query->fetch_assoc();
-        
-        $id=$fila["id"];
-        $fecha=$fila["fecha"]; 
-        $id_clientes=$fila["id_clientes"];
-    
-    }
+
 ?>
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Editar factura</h1>
+        <h1 class="h2">Nueva factura</h1>
          
       </div>
         
@@ -35,14 +26,14 @@ $sql="SELECT `id`, `fecha`, `id_clientes`, `created_at`, `updated_at` FROM `fact
         
 <div class="row">
     
-        <input type="hidden" name="id" value="<?php echo $id;?>" id="id">
+     
        
         
         
 <div class="col-md-6 col-xs-12 bg-success p-3">
   <label for="fecha" class="form-label labelgris">Fecha</label>
      <span id="fecha_error" class="text-danger"></span>
-  <input type="date" class="form-control" id="fecha" name="fecha" placeholder="fecha"  value="<?php echo $fecha;?>">
+  <input type="date" class="form-control" id="fecha" name="fecha" placeholder="fecha"  value="">
 </div>
 
     
@@ -57,10 +48,9 @@ $sql="SELECT `id`, `fecha`, `id_clientes`, `created_at`, `updated_at` FROM `fact
         $resultClientes=$mysqli->query($sqlClientes);
         if($resultClientes->num_rows>0){
             while($filaClientes=$resultClientes->fetch_assoc()){
-                $selectedCli="";
-                if($filaClientes["id"]==$id_clientes) $selectedCli="selected";
+               
                 ?>
-                <option value="<?php echo $filaClientes["id"];?>"   <?php echo $selectedCli;?> ><?php echo $filaClientes["apellidos"];?>, <?php echo $filaClientes["nombre"];?></option>
+                <option value="<?php echo $filaClientes["id"];?>"   ><?php echo $filaClientes["apellidos"];?>, <?php echo $filaClientes["nombre"];?></option>
         <?php
             }
         }
@@ -74,115 +64,13 @@ $sql="SELECT `id`, `fecha`, `id_clientes`, `created_at`, `updated_at` FROM `fact
     
     <div id="lineasFactura">
     
-    <?php
-    
-    $sql="SELECT `id`, `id_facturas`, `id_productos`, `cantidad`, `preciounitario`, `base`, `descuento`, `iva`, `precio`, `created_at`, `updated_at` FROM `lineasfacturas` WHERE  `id_facturas`=".$id;
-    $query=$mysqli->query($sql);   
-    $numLineas=$query->num_rows;
-    if($query->num_rows>0){
-        $indice=1;
-       while($fila=$query->fetch_assoc()){
-        
-        $idLinea=$fila["id"]; 
-        $id_facturas=$fila["id_facturas"];  
-        $id_productos=$fila["id_productos"]; 
-        $cantidad=$fila["cantidad"];  
-        $preciounitario=$fila["preciounitario"]; 
-        $base=$fila["base"];  
-        $descuento=$fila["descuento"]; 
-        $iva=$fila["iva"];  
-        $precio=$fila["precio"]; 
-       
-    
-    ?>
-    
-    
-    
-    
-    
-
-   
-        
- <div class="row mt-3 bg-secondary text-white p-2 mb-2"  data-indice="<?php echo $indice;?>">     
- <input type="hidden" name="idlinea<?php echo $indice;?>" value="<?php echo $idLinea;?>" id="idlinea<?php echo $indice;?>">
-    
-<div class="col-md-6">
-  <label for="id_productos<?php echo $indice;?>" class="form-label">Producto</label>
-     <span id="id_productos_error<?php echo $indice;?>" class="text-danger"></span>
-  <select class="form-control select2 changeProducto" id="id_productos<?php echo $indice;?>" name="id_productos<?php echo $indice;?>">
-      <option></option>
-        <?php
-     
-        $sqlProductos="SELECT `id`, `producto`, `imagen`, `precio`, `iva`, `stock`, `created_at`, `updated_at` FROM `productos` WHERE 1";
-        $resultProductos=$mysqli->query($sqlProductos);
-        if($resultProductos->num_rows>0){
-            while($filaProductos=$resultProductos->fetch_assoc()){
-                 $selectedProd="";
-                if($filaProductos["id"]==$id_productos) $selectedProd="selected";
-                ?>
-                <option value="<?php echo $filaProductos["id"];?>"  <?php echo $selectedProd;?>><?php echo $filaProductos["producto"];?></option>
-        <?php
-            }
-        }
-        ?>
-        
-    </select>
-</div>
- 
-        
-  
-<div class="col-md-3">
-  <label for="cantidad<?php echo $indice;?>" class="form-label">Cantidad</label>
-     <span id="cantidad_error<?php echo $indice;?>" class="text-danger"></span>
-  <input type="number" class="form-control calculaPrecio" id="cantidad<?php echo $indice;?>" name="cantidad<?php echo $indice;?>" step="1" value="<?php echo $cantidad;?>">
-</div>   
-
-     <div class="col-md-2">&nbsp;</div>
-       <div class="col-md-1"><a href="#" class="eliminar" ><i class="fa-solid fa-trash text-danger"></i></a></div>
-        
-<div class="col-md-2">
-  <label for="preciounitario<?php echo $indice;?>" class="form-label">precio unitario</label>
-     <span id="preciounitario_error<?php echo $indice;?>" class="text-danger"></span>
-  <input type="number" class="form-control calculaPrecio" id="preciounitario<?php echo $indice;?>" name="preciounitario<?php echo $indice;?>" step="0.1" value="<?php echo $preciounitario;?>">
-</div>   
-        
-<div class="col-md-2">
-  <label for="base<?php echo $indice;?>" class="form-label">base imp</label>
-     <span id="base_error<?php echo $indice;?>" class="text-danger"></span>
-  <input type="number" class="form-control calculaPrecio" id="base<?php echo $indice;?>" name="base<?php echo $indice;?>" step="0.1" value="<?php echo $base;?>">
-</div>     
-        
-<div class="col-md-2">
-  <label for="descuento<?php echo $indice;?>" class="form-label">descuento</label>
-     <span id="descuento_error<?php echo $indice;?>" class="text-danger"></span>
-  <input type="number" class="form-control calculaPrecio" id="descuento<?php echo $indice;?>" name="descuento<?php echo $indice;?>" step="0.1" value="<?php echo $descuento;?>">
-</div>  
-        
-<div class="col-md-2">
-  <label for="iva<?php echo $indice;?>" class="form-label">iva</label>
-     <span id="iva_error<?php echo $indice;?>" class="text-danger"></span>
-  <input type="number" class="form-control calculaPrecio" id="iva<?php echo $indice;?>" name="iva<?php echo $indice;?>" step="0.1" value="<?php echo $iva;?>">
-</div>  
-        
-<div class="col-md-2">
-  <label for="precio<?php echo $indice;?>" class="form-label">precio</label>
-     <span id="precio_error<?php echo $indice;?>" class="text-danger"></span>
-  <input type="number" class="form-control" id="precio<?php echo $indice;?>" name="precio<?php echo $indice;?>" step="0.1" value="<?php echo $precio;?>">
-</div>  
- </div>         
-  
-    <?php
-           $indice++;
-        }//while
-    }//if
-    ?>
-   </div>     
+      
     
            <div class="row">
             <div class="col-md-12 text-center" id="proceso"></div>
            
         </div>
-   
+    </div>      
         <div class="row mt-5 mb-5   ">
             <div class="col-md-4"> &nbsp;</div>
             <div class="col-md-4"> 
@@ -197,19 +85,21 @@ $sql="SELECT `id`, `fecha`, `id_clientes`, `created_at`, `updated_at` FROM `fact
   <input type="button" class="form-control" value="Aceptar" id="btnform1">
 </div>
     
-    <input type="hidden" name="numLineas" value="<?php echo $numLineas;?>" id="numLineas">
+    <input type="hidden" name="numLineas" value="0" id="numLineas">
     
- </div>       
+
+     </div>
     </form>   
 
       
     </main>
-  </div>
+ 
 </div>
  <?php include("scripts.php");?> 
       <script>
 $( document ).ready(function() {
-      let numLineas=<?php echo $numLineas;?>;
+      let numLineas=0;
+    
     
     $("#btnAdd2").click(function(){
         $('#btnAdd2').attr('disabled', true);
@@ -398,14 +288,14 @@ $( document ).ready(function() {
                 /* processData: false, 
                  contentType: false,
                   cache: false,*/
-                 url: "facturas_update4.php", 
+                 url: "facturas_insert4.php", 
                  success: function(result){
-                    //alert(result);
+                    alert(result);
                      if(result>=1){
                          //alert("Datos insertados correctamente!");
                        let timerInterval;
                             Swal.fire({
-                              title: "Datos actualizados correctamente!",
+                              title: "Datos actualziados correctamente!",
                               html: "",
                               timer: 2000,
                               timerProgressBar: true,
@@ -517,6 +407,7 @@ $( document ).ready(function() {
       
     });
    
+    
     
     
     });      

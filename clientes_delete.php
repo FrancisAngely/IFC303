@@ -1,13 +1,12 @@
 <?php
 //var_dump($_POST);
 $id=$_GET["id"];
+include("controller.php");
+echo EliminarCliente($id); 
 
-
-include("db.php");
+/*include("db.php");
 $sql="DELETE FROM `clientes` WHERE `id`='".$id."'";
-
-
 if($mysqli->query($sql))echo 1;
-else echo 0;
+else echo 0;*/
 //header("location:clientes.php");
 ?>

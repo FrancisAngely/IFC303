@@ -14,16 +14,13 @@
     <?php include("menu.php");?>
 <?php
  include("db.php");
-$sql="SELECT `id`, `fecha`, `id_clientes`, `created_at`, `updated_at` FROM `facturas` WHERE `id`=".$_GET["id"];
-    $query=$mysqli->query($sql);    
-    if($query->num_rows>0){
-        $fila=$query->fetch_assoc();
+
         
-        $id=$fila["id"];
-        $fecha=$fila["fecha"]; 
-        $id_clientes=$fila["id_clientes"];
+        $id="";
+        $fecha="";
+        $id_clientes="";
     
-    }
+
 ?>
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -76,22 +73,19 @@ $sql="SELECT `id`, `fecha`, `id_clientes`, `created_at`, `updated_at` FROM `fact
     
     <?php
     
-    $sql="SELECT `id`, `id_facturas`, `id_productos`, `cantidad`, `preciounitario`, `base`, `descuento`, `iva`, `precio`, `created_at`, `updated_at` FROM `lineasfacturas` WHERE  `id_facturas`=".$id;
-    $query=$mysqli->query($sql);   
-    $numLineas=$query->num_rows;
-    if($query->num_rows>0){
+    
         $indice=1;
-       while($fila=$query->fetch_assoc()){
-        
-        $idLinea=$fila["id"]; 
-        $id_facturas=$fila["id_facturas"];  
-        $id_productos=$fila["id_productos"]; 
-        $cantidad=$fila["cantidad"];  
-        $preciounitario=$fila["preciounitario"]; 
-        $base=$fila["base"];  
-        $descuento=$fila["descuento"]; 
-        $iva=$fila["iva"];  
-        $precio=$fila["precio"]; 
+      
+        $numLineas=1;
+        $idLinea=1; 
+        $id_facturas="";  
+        $id_productos=""; 
+        $cantidad=""; 
+        $preciounitario="";
+        $base="";
+        $descuento="";
+        $iva="";
+        $precio="";
        
     
     ?>
@@ -171,11 +165,7 @@ $sql="SELECT `id`, `fecha`, `id_clientes`, `created_at`, `updated_at` FROM `fact
 </div>  
  </div>         
   
-    <?php
-           $indice++;
-        }//while
-    }//if
-    ?>
+    
    </div>     
     
            <div class="row">
@@ -400,12 +390,12 @@ $( document ).ready(function() {
                   cache: false,*/
                  url: "facturas_update4.php", 
                  success: function(result){
-                    //alert(result);
+                    alert(result);
                      if(result>=1){
                          //alert("Datos insertados correctamente!");
                        let timerInterval;
                             Swal.fire({
-                              title: "Datos actualizados correctamente!",
+                              title: "Datos actualziados correctamente!",
                               html: "",
                               timer: 2000,
                               timerProgressBar: true,
@@ -517,6 +507,7 @@ $( document ).ready(function() {
       
     });
    
+    
     
     
     });      
