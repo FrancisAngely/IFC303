@@ -139,3 +139,15 @@ function ActualizarProveedor($post)
     if ($mysqli->query($sql)) return 1;
     else return 0;
 }
+
+function DatosProveedor($post)
+{
+    include("db.php");
+    $fila = array();
+    $sql = "SELECT `id`, `razon_social`, `nombre_comercial`, `cif`, `formapago`, `created_at`, `updated_at` FROM `proveedores` WHERE `id`=" . $_GET["id"];
+    $query = $mysqli->query($sql);
+    if ($query->num_rows > 0) {
+        $fila = $query->fetch_assoc();
+    }
+    return $fila;
+}
