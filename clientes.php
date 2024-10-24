@@ -27,7 +27,7 @@
    </tr>
     <?php
     
-    $query=getAll();    
+    $query=getAll("clientes");    
     if($query->num_rows>0){
         while($fila=$query->fetch_assoc()){
             //var_dump($fila);
