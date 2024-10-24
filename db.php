@@ -11,4 +11,11 @@ if(mysqli_connect_errno()){
     exit();
 }
 $mysqli->set_charset("utf8");
+
+
+try {
+    $dbh = new PDO('mysql:host=localhost;dbname=ifc303', $user, $password       );
+} catch (PDOException $e) {
+    // attempt to retry the connection after some timeout for example
+}
 ?>

@@ -1,14 +1,8 @@
 <?php
+include("controller.php");
 //var_dump($_POST);
 $id=$_GET["id"];
-include("controller.php");
-echo EliminarCliente($id); 
 
-// echo delById("proveedores",$id); 
-
-/*include("db.php");
-$sql="DELETE FROM `clientes` WHERE `id`='".$id."'";
-if($mysqli->query($sql))echo 1;
-else echo 0;*/
+echo EliminarCliente($id);
 //header("location:clientes.php");
 ?>

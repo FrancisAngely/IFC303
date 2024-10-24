@@ -1,19 +1,14 @@
 <?php
 //var_dump($_POST);
-include("controller.php"); 
-echo ActualizarProveedor($_POST); 
+include("controller.php");
 
-/*$id=$_POST["id"];
-$razon_social=$_POST["razon_social"];
-$nombre_comercial=$_POST["nombre_comercial"];
-$cif=$_POST["cif"];
-$formapago=$_POST["formapago"];
-
-include("db.php");
-$sql="UPDATE `proveedores` SET `razon_social`='".$razon_social."',`nombre_comercial`='".$nombre_comercial."',`cif`='".$cif."',`formapago`='".$formapago."',`updated_at`='".date("Y-m-d h:i:s")."' WHERE `id`='".$id."'";
-
-
-if($mysqli->query($sql)) echo 1;
-else echo 0;*/
+$tabla="proveedores";
+$datos["razon_social"]=$_POST["razon_social"];
+$datos["nombre_comercial"]=$_POST["nombre_comercial"];
+$datos["cif"]=$_POST["cif"];
+$datos["formapago"]=$_POST["formapago"];
+$datos["created_at"]=date('Y-m-d h:i:s');
+$datos["updated_at"]=date('Y-m-d h:i:s');
+echo updateById($tabla,$datos,$_POST["id"]);
 //header("location:proveedores.php");
 ?>

@@ -107,8 +107,8 @@ $( document ).ready(function() {
                  method:"POST",
                  url: "proveedores_insert.php", 
                  success: function(result){
-                    
-                     if(result>1){
+                    alert(result);
+                     if(result>=1){
                          //alert("Datos insertados correctamente!");
                        let timerInterval;
                             Swal.fire({

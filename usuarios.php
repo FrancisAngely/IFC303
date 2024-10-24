@@ -31,7 +31,7 @@
                     </tr>
 
                     <?php
-                    $sql = "SELECT `id`, `username`, `pass`, `nombre`, `apellidos`, `email`, `created_at`, `updated_at` FROM `usuarios` WHERE 1";
+                    $sql = TodosUsuarios(); //"SELECT `id`, `username`, `pass`, `nombre`, `apellidos`, `email`, `created_at`, `updated_at` FROM `usuarios` WHERE 1";
                     $query = $mysqli->query($sql);
                     if ($query->num_rows > 0) {
                         while ($fila = $query->fetch_assoc()) {

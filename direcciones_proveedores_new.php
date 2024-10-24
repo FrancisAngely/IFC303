@@ -19,23 +19,18 @@
      
     <form action="#" method="post" enctype="multipart/form-data">
         
-
+<?php include("db.php");?>
 
 <div class="mb-3">
   <label for="id_proveedor" class="form-label">Proveedor</label>
   <select class="form-control" id="id_proveedor" name="id_proveedor">
   <option></option>
   <?php
-      include("db.php");
-    $sql="SELECT `id`, `razon_social`, `nombre_comercial`, `cif`, `formapago`, `created_at`, `updated_at` FROM `proveedores` WHERE 1";
-   
-    $query=$mysqli->query($sql);    
-    if($query->num_rows>0){
-        while($fila=$query->fetch_assoc()){
-        ?>
-      <option value="<?php echo $fila["id"];?>"><?php echo $fila["razon_social"];?>-<?php echo $fila["cif"];?></option>
-    <?php }
-    }
+    // echo SelectOptionsIdOrderBy("proveedores","razon_social","ASC");
+    //echo SelectOptions2CamposOrderBy("proveedores","id","razon_social","cif","-","ASC");
+      
+      $Vmostrar="razon_social,nombre_comercial,cif";
+    echo SelectOptionsVariosCamposOrderBy("proveedores","id",$Vmostrar,"-","ASC");
     ?>
  </select>
 </div>
@@ -51,15 +46,8 @@
     <select class="form-control select2" id="provincia" name="provincia" >
       <option></option>
         <?php
-        $sqlProvincias="SELECT `id`, `provincia`, `created_at`, `updated_at` FROM `provincias` WHERE 1 ORDER BY provincia asc";
-        $resultProv=$mysqli->query($sqlProvincias);
-        if($resultProv->num_rows>0){
-            while($filaProv=$resultProv->fetch_assoc()){
-                ?>
-                <option value="<?php echo $filaProv["id"];?>"><?php echo $filaProv["provincia"];?></option>
-        <?php
-            }
-        }
+         //SelectProvincias();
+        echo SelectOptionsOrderBy("provincias","id","provincia","DESC");
         ?>
         
     </select>
