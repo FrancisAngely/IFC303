@@ -1,50 +1,53 @@
 <!doctype html>
 <html lang="en" data-bs-theme="auto">
-  <?php include("head.php");?>
-  <body>
-    <?php include("iconos.php");?>
+<?php include("head.php"); ?>
 
-<?php include("header.php");?>
+<body>
+  <?php include("iconos.php"); ?>
 
-<div class="container-fluid">
-  <div class="row">
-    <?php include("menu.php");?>
+  <?php include("header.php"); ?>
 
-    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+  <div class="container-fluid">
+    <div class="row">
+      <?php include("menu.php"); ?>
+
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Clientes</h1>
-          <a href="clientes_new.php" class="btn btn-primary">Nuevo</a>
+        <h1 class="h2">Usuarios</h1>
+          <a href="modulo_usuarios_List_new.php" class="btn btn-primary">Nuevo</a>
       </div>
-    <?php
-       include("db.php"); 
-     ?>
-    <table class="table">
-    <tr>
-        <th>Id</th> 
-        <th>Usuario</th>  
-        <th>Email</th>
-        <th>Acciones</th>
-   </tr>
-    <?php
-    
-    /*$query=getAll("clientes");    */
-    if($query->num_rows>0){
-        while($fila=$query->fetch_assoc()){
-            //var_dump($fila);
-          //  echo "<tr><td>".$fila["id"]."</td><td>".$fila["nombre"]."</td><td>".$fila["apellidos"]."</td></tr>";
-        ?>
-        <tr id="fila<?php echo $fila["id"];?>">
-            <td><?php echo $fila["id"];?></td>
-            <td><?php echo $fila["nombre"];?></td>
-            <td><?php echo $fila["apellidos"];?></td>
-            <td><a href="clientes_edit.php?id=<?php echo $fila["id"];?>"><i class="fa-solid fa-pen-to-square fa-2x"></i></a>
+
+        <table class="table">
+          <tr>
+            <th>Id</th>
+            <th>Usuario</th>
+            <th>E-mail</th>
+            <th>Acciones</th>
+          </tr>
+          <?php
+          //$usuarios=getAllV("usuarios"); 
+          $usuarios = getAllVInner("usuarios", "roles", "id_roles", "id");
+          if (count($usuarios) > 0) {
+            foreach ($usuarios as $u) {
+          ?>
+              <tr>
+                <td><?php echo $u["id1"]; ?></td>
+                <td><?php echo $u["usuario"]; ?></td>
+                <td><?php echo $u["email"]; ?></td>
+                
+                <td><a href="modulo_usuarios_List_edit.php?id=<?php echo $u["id1"];?>"><i class="fa-solid fa-pen-to-square fa-2x"></i></a>
             &nbsp;&nbsp;
-            <a href="#" id="btndelete<?php echo $fila["id"];?>"><i class="fa-solid fa-trash text-danger"></i></a>
+            <a href="modulos_usuarios_delete.php?id=<?php echo $fila["id1"];?>"><i class="fa-solid fa-trash text-danger"></i></a>
             </td>
-        </tr>
-        <!--clientes_delete.php?id=<?php echo $fila["id"];?>-->
+              </tr>
+          <?php
+            }
+          }
+          ?>
+        </table>
+
         <script>
-        $("#btndelete<?php echo $fila["id"];?>").click(function(){
+        $("#btndelete<?php echo $cli["id"];?>").click(function(){
            const swalWithBootstrapButtons = Swal.mixin({
                           customClass: {
                             confirmButton: "btn btn-success",
@@ -64,7 +67,7 @@
                           if (result.isConfirmed) {
                               
                               $.ajax({
-                                     data:{id:<?php echo $fila["id"];?>},
+                                     data:{id:<?php echo $cli["id"];?>},
                                      method:"GET",
                                      url: "clientes_delete.php", 
                                      success: function(result){
@@ -74,7 +77,7 @@
                                               text: "Cliente dado de baja",
                                               icon: "success"
                                             });
-                                             $("#fila<?php echo $fila["id"];?>").hide();
+                                             $("#fila<?php echo $cli["id"];?>").hide();
                                          }else{
                                              swalWithBootstrapButtons.fire({
                                               title: "No Eliminado!",
@@ -103,27 +106,13 @@
         });
         
         </script>
-        
-        
-        <?php
-        }
-    }    
-    ?>
-        
-    </table>
-        
-    <hr>
-         <table class="table">
-    <tr>
-        <th>Id</th> 
-        <th>Nombre</th>  
-        <th>Apellidos</th>
-        <th>Acciones</th>
-   </tr>
-      
-    </main>
+
+
+
+      </main>
+    </div>
   </div>
-</div>
- <?php include("scripts.php");?>     
+  <?php include("scripts.php"); ?>
 </body>
+
 </html>

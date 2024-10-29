@@ -26,8 +26,7 @@ function getAllVInner($tabla1, $tabla2, $id1, $id2)
 {
     include("db.php");
     $resultado = array();
-    
-    $sql = "SELECT * FROM `" . $tabla1 . "`.`id` ";
+    $sql = "SELECT `" . $tabla1 . "`.*,`" . $tabla2 . "`.*, `" . $tabla1 . "`.id as id1 FROM `" . $tabla1 . "` ";
     $sql .= " INNER JOIN `" . $tabla2 . "` ON `" . $tabla1 . "`.`" . $id1 . "`=`" . $tabla2 . "`.`" . $id2 . "`";
 
     $query = $mysqli->query($sql);
@@ -38,7 +37,6 @@ function getAllVInner($tabla1, $tabla2, $id1, $id2)
     }
     return $resultado;
 }
-
 
 function getById($tabla, $id)
 {
