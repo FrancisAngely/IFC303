@@ -21,13 +21,13 @@
     <table class="table">
     <tr>
         <th>Id</th> 
-        <th>Nombre</th>  
-        <th>Apellidos</th>
+        <th>Usuario</th>  
+        <th>Email</th>
         <th>Acciones</th>
    </tr>
     <?php
     
-    $query=getAll("clientes");    
+    /*$query=getAll("clientes");    */
     if($query->num_rows>0){
         while($fila=$query->fetch_assoc()){
             //var_dump($fila);
@@ -120,91 +120,6 @@
         <th>Apellidos</th>
         <th>Acciones</th>
    </tr>
-    <?php
-       $misClientes=TodosClientesV();  
-    if(count($misClientes)>0){
-        foreach($misClientes as $cli){
-            ?>
-        <tr id="fila<?php echo $cli["id"];?>">
-            <td><?php echo $cli["id"];?></td>
-            <td><?php echo $cli["nombre"];?></td>
-            <td><?php echo $cli["apellidos"];?></td>
-            <td><a href="clientes_edit.php?id=<?php echo $cli["id"];?>"><i class="fa-solid fa-pen-to-square fa-2x"></i></a>
-            &nbsp;&nbsp;
-            <a href="#" id="btndelete<?php echo $cli["id"];?>"><i class="fa-solid fa-trash text-danger"></i></a>
-            </td>
-        </tr>
-        <!--clientes_delete.php?id=<?php echo $cli["id"];?>-->
-        <script>
-        $("#btndelete<?php echo $cli["id"];?>").click(function(){
-           const swalWithBootstrapButtons = Swal.mixin({
-                          customClass: {
-                            confirmButton: "btn btn-success",
-                            cancelButton: "btn btn-danger"
-                          },
-                          buttonsStyling: false
-                        });
-                        swalWithBootstrapButtons.fire({
-                          title: "Desea eliminar al cliente?",
-                          text: "no hay vuelta atrás!",
-                          icon: "warning",
-                          showCancelButton: true,
-                          confirmButtonText: "Si, borrar!",
-                          cancelButtonText: "No, mantener!",
-                          reverseButtons: true
-                        }).then((result) => {
-                          if (result.isConfirmed) {
-                              
-                              $.ajax({
-                                     data:{id:<?php echo $cli["id"];?>},
-                                     method:"GET",
-                                     url: "clientes_delete.php", 
-                                     success: function(result){
-                                         if(result==1){
-                                            swalWithBootstrapButtons.fire({
-                                              title: "Eliminado!",
-                                              text: "Cliente dado de baja",
-                                              icon: "success"
-                                            });
-                                             $("#fila<?php echo $cli["id"];?>").hide();
-                                         }else{
-                                             swalWithBootstrapButtons.fire({
-                                              title: "No Eliminado!",
-                                              text: "Cliente NO dado de baja",
-                                              icon: "error"
-                                            });
-                                         }
-                                    }
-                                 });
-
-                              
-                            
-                              
-                              
-                          } else if (
-                            /* Read more about handling dismissals below */
-                            result.dismiss === Swal.DismissReason.cancel
-                          ) {
-                         /*   swalWithBootstrapButtons.fire({
-                              title: "Cancelled",
-                              text: "Your imaginary file is safe :)",
-                              icon: "error"
-                            });*/
-                          }
-                        }); 
-        });
-        
-        </script>
-        <?php
-        }
-        
-    }
-    ?>
-      </table>  
-        
-        
-    <hr>
-
       
     </main>
   </div>

@@ -1,9 +1,10 @@
 <?php
 
-function getAll($tabla){
-     include("db.php");
-    $sql="SELECT * FROM `".$tabla."` WHERE 1";   
-    $query=$mysqli->query($sql);       
+function getAll($tabla)
+{
+    include("db.php");
+    $sql = "SELECT * FROM `" . $tabla . "` WHERE 1";
+    $query = $mysqli->query($sql);
     return $query;
 }
 
@@ -21,6 +22,24 @@ function getAllV($tabla)
     return $resultado;
 }
 
+function getAllVInner($tabla1, $tabla2, $id1, $id2)
+{
+    include("db.php");
+    $resultado = array();
+    
+    $sql = "SELECT * FROM `" . $tabla1 . "`.`id` ";
+    $sql .= " INNER JOIN `" . $tabla2 . "` ON `" . $tabla1 . "`.`" . $id1 . "`=`" . $tabla2 . "`.`" . $id2 . "`";
+
+    $query = $mysqli->query($sql);
+    if ($query->num_rows > 0) {
+        while ($fila = $query->fetch_assoc()) {
+            array_push($resultado, $fila);
+        }
+    }
+    return $resultado;
+}
+
+
 function getById($tabla, $id)
 {
     include("db.php");
@@ -32,6 +51,7 @@ function getById($tabla, $id)
     }
     return $fila;
 }
+
 
 
 function delById($tabla, $id)
@@ -455,7 +475,38 @@ function SelectOptionsVariosCamposOrderBy($tabla, $value, $Vmostrar, $separador,
     return $options;
 }
 
-function SelectOptionsVariosCamposOrderByarray($tabla, $value, $Vmostrar, $separador, $order)
+function SelectOptionsVariosCamposOrderBy2($tabla, $value, $Vmostrar, $separador, $order)
+{
+    include("db.php");
+
+
+    $sql = "SELECT `" . $value . "` ";
+    $sql .= ", `" . $Vmostrar . "`";
+    $sql .= " FROM `" . $tabla . "` ORDER BY `" . $Vmostrar[0] . "` " . $order;
+    $query = $mysqli->query($sql);
+    if ($query->num_rows > 0) {
+        while ($fila = $query->fetch_assoc()) {
+
+            $options .= '<option value="' . $fila[$value] . '">';
+
+            $Vmostrar = explode(",", $Vmostrar);
+            $aux = 0;
+            foreach ($Vmostrar as $mostrar) {
+                if ($aux == 0) {
+                    $options .= $fila[$mostrar];
+                    $aux = 1;
+                } else {
+                    $options .= $separador . $fila[$mostrar];
+                }
+            }
+
+            $options .= '</option>';
+        }
+    }
+    return $options;
+}
+
+function SelectOptionsVariosCamposOrderByArray($tabla, $value, $Vmostrar, $separador, $order)
 {
     include("db.php");
 
@@ -485,29 +536,165 @@ function SelectOptionsVariosCamposOrderByarray($tabla, $value, $Vmostrar, $separ
     return $options;
 }
 
-function SelectOptionsIdSel($tabla, $value, $sel)
+
+
+
+
+function SelectOptionsIdSel($tabla, $mostrar, $sel)
 {
     include("db.php");
-    //$sql = "SELECT `" . $value . "`, `" . $mostrar . "` FROM `" . $tabla . "`";
-    $query=getAll($tabla); 
-    $query = $mysqli->query($sql);
+    // $sql="SELECT `id`, `".$mostrar."` FROM `".$tabla."`";
+    $query = getAll($tabla);
+    //$query=$mysqli->query($sql);    
     if ($query->num_rows > 0) {
         while ($fila = $query->fetch_assoc()) {
-            $selected=""; 
-            if($fila["id"]==$sel){
-                $selected="selected"; 
+            $selected = "";
+            if ($fila["id"] == $sel) {
+                $selected = "selected";
             }
 
-            $options .= '<option value="' . $fila[$value] .'" '.$selected.' >' . $fila[$mostrar] . '</option>';
+            $options .= '<option value="' . $fila["id"] . '"   ' . $selected . '   >' . $fila[$mostrar] . '</option>';
         }
     }
     return $options;
 }
 
+function SelectOpciones($opciones)
+{
+    $options = "";
+    $Vopciones = explode(";", $opciones);
+    foreach ($Vopciones as $op) {
+        $options .= '<option value="' . $op . '">' . $op . '</option>';
+    }
+
+    return $options;
+}
+
+function SelectOpcionesSel($opciones, $sel)
+{
+    $options = "";
+    $Vopciones = explode(";", $opciones);
+    foreach ($Vopciones as $op) {
+        $selected = "";
+        if ($op == $sel) {
+            $selected = "selected";
+        }
+        $options .= '<option value="' . $op . '"    ' . $selected . '     >' . $op . '</option>';
+    }
+
+    return $options;
+}
+
+function UploadFile($file, $carpeta, $nombre)
+{
+
+
+    if ($file["name"] != "") {
+        //directorio de subida
+        $target_dir = $carpeta . "/";
+        //extension archivo que subo
+        $imageTypeFile = strtolower(pathinfo($file["name"], PATHINFO_EXTENSION));
+        //renombro el archivo
+        $target_file = $target_dir . $nombre . "." . $imageTypeFile;
+
+        //borro si existe
+        if (file_exists($target_file)) {
+            unlink($target_file);
+        }
+
+        //subir el archivo y actualizar campo imagen en la tabla
+        if (move_uploaded_file($file["tmp_name"], $target_file)) {
+            return $target_file;
+        } else {
+            return "error";
+        }
+    } else {
+        return "error";
+    }
+}
+
+function uploadfile2($imagen, $target_dir, $nombre)
+{
+
+    if ($imagen["name"] != "") {
+        //directorio de subida
+
+        //extension archivo que subo
+        $imageTypeFile = strtolower(pathinfo($imagen["name"], PATHINFO_EXTENSION));
+        //renombro el archivo
+        $target_file = $target_dir . "/" . $nombre . "." . $imageTypeFile;
+        //subir el archivo y actualizar campo imagen en la tabla
+        if (move_uploaded_file($imagen["tmp_name"], $target_file)) {
+            return $target_file;
+        } else {
+            return "";
+        }
+    } else {
+        return "";
+    }
+}
+
+function UploadFile3($file, $target_file, $nombre)
+{
+    if ($file["name"] != "") {
+        $archivo = $target_file . "/" . $nombre;
+        if (file_exists($archivo)) {
+            unlink($archivo);
+        }
 
 
 
+        //directorio de subida
+        $target_dir = $target_file . "/";
+        //extension archivo que subo
+        $imageTypeFile = strtolower(pathinfo($file["name"], PATHINFO_EXTENSION));
+        //renombro el archivo
+        $target_file = $target_dir . $nombre . "." . $imageTypeFile;
+        //subir el archivo y actualizar campo imagen en la tabla
+        if (move_uploaded_file($file["tmp_name"], $target_file)) {
+            return $target_file;
+        } else {
+            return "";
+        }
+    } else return "";
+}
 
+function conseguirValor($tabla, $campo, $id)
+{
+    include("db.php");
+    $fila = array();
+    $sql = "SELECT `" . $campo . "` FROM `" . $tabla . "` WHERE `id`=" . $id;
+    $query = $mysqli->query($sql);
+    if ($query->num_rows > 0) {
+        $fila = $query->fetch_assoc();
+    }
+    return $fila[$campo];
+}
+
+function borrarArchivo($target)
+{
+
+    if (file_exists($target)) {
+        unlink($target);
+        return 1;
+    } else return 0;
+}
+
+function verificarUsuario($username, $passMd5)
+{
+    include("db.php");
+    $sql = "SELECT `id`, `id_roles`, `usuario`, `password`, `email`, `created_at`, `updated_at` FROM `usuarios`";
+    $sql .= "WHERE 1";
+    $sql .= " and `usuario`='" . $username . "'";
+    $sql .= " and `password`='" . $passMd5 . "'";
+
+    $query = $mysqli->query($sql);
+    if ($query->num_rows > 0) {
+        $fila = $query->fetch_assoc();
+        return $fila;
+    }
+    return 0;
+}
 
 
 
