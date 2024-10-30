@@ -1,10 +1,48 @@
 <?php
+function VerificarUsuario($username, $passMd5)
+{
+    include("db.php");
+    $sql = "SELECT `id`, `id_roles`, `usuario`, `password`, `email`, `created_at`, `updated_at` FROM `usuarios`";
+    $sql .= " WHERE 1 ";
+    $sql .= " and `usuario`='" . $username . "'";
+    $sql .= " and `password`='" . $passMd5 . "'";
+
+    $query = $mysqli->query($sql);
+    if ($query->num_rows > 0) {
+        //usuario valido
+        $fila = $query->fetch_assoc();
+        return $fila;
+    } else {
+        return 0;
+    }
+}
+
+function getByColum2($tabla, $column1, $valor1, $column2, $valor2)
+{
+    include("db.php");
+    $sql = "SELECT * FROM `" . $tabla . "`";
+    $sql .= " WHERE 1 ";
+    $sql .= " and `" . $column1 . "`='" . $valor1 . "'";
+    $sql .= " and `" . $column2 . "`='" . $valor2 . "'";
+    $query = $mysqli->query($sql);
+    if ($query->num_rows > 0) {
+        //usuario valido
+        $fila = $query->fetch_assoc();
+        return $fila;
+    } else {
+        return 0;
+    }
+}
+
+
 
 function getAll($tabla)
 {
     include("db.php");
     $sql = "SELECT * FROM `" . $tabla . "` WHERE 1";
+
     $query = $mysqli->query($sql);
+
     return $query;
 }
 
@@ -22,6 +60,7 @@ function getAllV($tabla)
     return $resultado;
 }
 
+
 function getAllVInner($tabla1, $tabla2, $id1, $id2)
 {
     include("db.php");
@@ -37,6 +76,7 @@ function getAllVInner($tabla1, $tabla2, $id1, $id2)
     }
     return $resultado;
 }
+
 
 function getById($tabla, $id)
 {
@@ -388,6 +428,7 @@ function SelectOptionsId($tabla, $mostrar)
 function SelectOptions($tabla, $value, $mostrar)
 {
     include("db.php");
+    $options = "";
     $sql = "SELECT `" . $value . "`, `" . $mostrar . "` FROM `" . $tabla . "`";
     $query = $mysqli->query($sql);
     if ($query->num_rows > 0) {
@@ -543,6 +584,7 @@ function SelectOptionsIdSel($tabla, $mostrar, $sel)
     include("db.php");
     // $sql="SELECT `id`, `".$mostrar."` FROM `".$tabla."`";
     $query = getAll($tabla);
+    $options = "";
     //$query=$mysqli->query($sql);    
     if ($query->num_rows > 0) {
         while ($fila = $query->fetch_assoc()) {
@@ -660,7 +702,7 @@ function UploadFile3($file, $target_file, $nombre)
 function conseguirValor($tabla, $campo, $id)
 {
     include("db.php");
-    $fila = array();
+    $fila = "";
     $sql = "SELECT `" . $campo . "` FROM `" . $tabla . "` WHERE `id`=" . $id;
     $query = $mysqli->query($sql);
     if ($query->num_rows > 0) {
@@ -678,21 +720,6 @@ function borrarArchivo($target)
     } else return 0;
 }
 
-function verificarUsuario($username, $passMd5)
-{
-    include("db.php");
-    $sql = "SELECT `id`, `id_roles`, `usuario`, `password`, `email`, `created_at`, `updated_at` FROM `usuarios`";
-    $sql .= "WHERE 1";
-    $sql .= " and `usuario`='" . $username . "'";
-    $sql .= " and `password`='" . $passMd5 . "'";
-
-    $query = $mysqli->query($sql);
-    if ($query->num_rows > 0) {
-        $fila = $query->fetch_assoc();
-        return $fila;
-    }
-    return 0;
-}
 
 
 

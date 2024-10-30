@@ -1,8 +1,8 @@
 <?php
+$id=$_POST["id"];
+
 
 include("controller.php");
-
-//$id=$_POST[];
-
+echo delById("usuarios",$id);
 
 ?>

@@ -30,23 +30,9 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="password" class="form-label">Contraseña</label>
-                            <span id="password_error" class="text-danger"></span>
-                            <input type="text" class="form-control" id="password" name="password" placeholder="password" value="<?php echo $user["password"]; ?>">
-                        </div>
-
-
-
-                        <div class="mb-3">
-                            <label for="email" class="form-label">E-mail</label>
-                            <span id="email_error" class="text-danger"></span>
-                            <input type="text" class="form-control" id="email" name="email" placeholder="email" value="<?php echo $user["email"]; ?>">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="id_roles" class="form-label">Role</label>
-                            <span id="id_roles_error" class="text-danger"></span>
-                            <select class="form-control" id="id_roles" name="id_roles">
+                            <label for="role" class="form-label">Role</label>
+                            <span id="role_error" class="text-danger"></span>
+                            <select class="form-control" id="role" name="role">
                                 <option></option>
                                 <?php echo SelectOptionsIdSel("roles", "role", $user["id"]); ?>
                             </select>
@@ -64,23 +50,19 @@
 
     <script>
         $(document).ready(function() {
-            //SELECT `id`, `id_roles`, `usuario`, `password`, `email`, `created_at`, `updated_at` FROM `usuarios` WHERE 1
-
             $("#btnform1").click(function() {
                 // Swal.fire("SweetAlert2 is working!");
 
-                let id_roles = $("#id_roles").val();
+                let id_roles = $("#role").val();
                 let usuario = $("#usuario").val();
-                let password = $("#password").val();
-                let email = $("#email").val();
                 let error = 0;
 
 
-                if (id_roles == "") {
+                if (role == "") {
 
                     error = 1;
-                    $("#id_roles_error").html("Debe introducir un role");
-                    $("#id_roles").addClass("borderError");
+                    $("#roleerror").html("Debe introducir un role");
+                    $("#role").addClass("borderError");
                 }
 
                 if (usuario == "") {
@@ -89,26 +71,13 @@
                     $("#usuario_error").html("Debe introducir un nombre de usuario");
                     $("#usuario").addClass("borderError");
                 }
-
-                if (password == "") {
-
-                    error = 1;
-                    $("#password_error").html("Debe introducir una contraseña");
-                    $("#password").addClass("borderError");
-                }
-
-                if (email == "") {
-
-                    error = 1;
-                    $("#email_error").html("Debe introducir un E-mail correcto");
-                    $("#email").addClass("borderError");
-                }
+                
                 if (error == 0) {
                     //$("#form1").submit();
                     $.ajax({
                         data: $("#form1").serialize(),
                         method: "POST",
-                        url: "modulo_usuarios_update.php",
+                        url: "modulo_roles_update.php",
                         success: function(result) {
 
                             if (result == 1) {
@@ -132,7 +101,7 @@
                                 }).then((result) => {
                                     /* Read more about handling dismissals below */
                                     if (result.dismiss === Swal.DismissReason.timer) {
-                                        location.href = "modulo_usuarios_List.php";
+                                        location.href = "modulo_roles.php";
                                     }
                                 });
                                 //location.href="clientes.php";

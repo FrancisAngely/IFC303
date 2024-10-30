@@ -12,16 +12,14 @@
 
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Usuarios</h1>
-           <a href="modulo_usuarios_new.php" class="btn btn-primary">Nuevo</a>
+        <h1 class="h2">Roles</h1>
+           <a href="modulo_roles_new.php" class="btn btn-primary">Nuevo</a>
       </div>
 
       <table class="table">
     <tr>
         <th>Id</th> 
-        <th>Usuario</th>  
-        <th>E-mail</th>
-        <th>Role</th>
+        <th>Role</th>  
         <th>Acciones</th>
    </tr>
         <?php
@@ -33,10 +31,8 @@
                  ?>
                     <tr>
                     <td><?php echo $u["id1"];?></td> 
-                    <td><?php echo $u["usuario"];?></td>  
-                    <td><?php echo $u["email"];?></td>
-                    <td><?php echo $u["role"];?></td>
-                    <td><a href="modulo_usuarios_List_edit.php?id=<?php echo $u["id1"];?>"><i class="fa-solid fa-pen-to-square fa-2x"></i></a>
+                    <td><?php echo $u["role"];?></td>  
+                    <td><a href="modulo_roles_edit.php?id=<?php echo $u["id1"];?>"><i class="fa-solid fa-pen-to-square fa-2x"></i></a>
                     &nbsp;&nbsp;
                      <a href="#" data-id="<?php echo $u["id1"];?>" class="borrar"><i class="fa-solid fa-trash text-danger"></i></a>    
                     </td>

@@ -21,8 +21,16 @@
             Usuarios
           </a>
         </li>
-        <ul>
-        </ul>
+
+        <li class="nav-item">
+          <a class="nav-link d-flex align-items-center gap-2" href="modulo_roles.php">
+            <svg class="bi">
+              <use xlink:href="#plus-circle" />
+            </svg>
+            Roles
+          </a>
+        </li>
+
         <hr>
 
         <li class="nav-item">
