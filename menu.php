@@ -27,6 +27,14 @@
                 Roles
               </a>
             </li>
+
+            <li class="nav-item">
+              <a class="nav-link d-flex align-items-center gap-2" href="modulo_eventos_list.php">
+                <svg class="bi"><use xlink:href="#calendar3"/></svg>
+                Eventos
+              </a>
+            </li>
+              
               
             
           </ul>
