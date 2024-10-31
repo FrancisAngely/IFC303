@@ -23,7 +23,6 @@
         <th>Acciones</th>
    </tr>
         <?php
-          //$usuarios=getAllV("usuarios");
           $usuarios=getAllVInner("usuarios","roles","id_roles","id");
          
          if(count($usuarios)>0){
