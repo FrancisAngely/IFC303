@@ -89,7 +89,23 @@ function getAllVInner($tabla1,$tabla2,$id1,$id2){
    }
     return $resultado;
 }
-
+function getAllVInner2($tabla1,$tabla2,$tabla3,$tabla_1_id_tabla_2,$tabla_1_id_tabla_3,$id_tabla2,$id_tabla3){
+     include("db.php");
+    $resultado=array();
+    $sql="SELECT `".$tabla1."`.*,`".$tabla2."`.*,`".$tabla3."`.*, `".$tabla1."`.id as id1 FROM `".$tabla1."` ";
+    $sql.=" INNER JOIN `".$tabla2."` ON `".$tabla1."`.`".$tabla_1_id_tabla_2."`=`".$tabla2."`.`".$id_tabla2."`";
+    
+    $sql.=" INNER JOIN `".$tabla3."` ON `".$tabla1."`.`".$tabla_1_id_tabla_3."`=`".$tabla3."`.`".$id_tabla3."`";
+    
+   $query=$mysqli->query($sql);    
+   if($query->num_rows>0){
+        while($fila=$query->fetch_assoc()){
+         array_push($resultado,$fila);   
+        }
+       
+   }
+    return $resultado;
+}
 
 function getById($tabla,$id){
     include("db.php");
@@ -243,6 +259,24 @@ function TodosClientes(){
     return $query;
     
 }
+
+function TodosParticipantesV(){
+    include("db.php");
+    $resultado=array();
+    $sql="SELECT `participantes`.`id` as id1, `participantes`.`id_eventos`, `participantes`.`id_entradas`, `participantes`.`nombre`, `participantes`.`apellidos`, `participantes`.`email`, `participantes`.`nif_nie`, `participantes`.`telefono`, `participantes`.`created_at`, `participantes`.`updated_at`,eventos.evento,entradas.entrada,entradas.precio FROM `participantes` ";
+   $sql.=" INNER JOIN eventos ON `participantes`.`id_eventos`=eventos.id"; 
+    $sql.=" INNER JOIN entradas ON `participantes`.`id_entradas`=entradas.id"; 
+    $query=$mysqli->query($sql);    
+   if($query->num_rows>0){
+        while($fila=$query->fetch_assoc()){
+         array_push($resultado,$fila);   
+        }
+       
+   }
+    return $resultado;
+    
+}
+
 
 
 function TodosClientesV(){
