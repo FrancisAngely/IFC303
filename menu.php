@@ -23,18 +23,24 @@
               
             <li class="nav-item">
               <a class="nav-link d-flex align-items-center gap-2" href="modulo_roles_list.php">
-                <svg class="bi"><use xlink:href="#people"/></svg>
+                <svg class="bi"><use xlink:href="#events2"/></svg>
                 Roles
+              </a>
+            </li>
+              
+            <li class="nav-item">
+              <a class="nav-link d-flex align-items-center gap-2" href="modulo_eventos_list.php">
+                <svg class="bi"><use xlink:href="#events"/></svg>
+                Eventos
               </a>
             </li>
 
             <li class="nav-item">
-              <a class="nav-link d-flex align-items-center gap-2" href="modulo_eventos_list.php">
-                <svg class="bi"><use xlink:href="#calendar3"/></svg>
-                Eventos
+              <a class="nav-link d-flex align-items-center gap-2" href="modulo_entradas_list.php">
+                <svg class="bi"><use xlink:href="#tickets"/></svg>
+                Entradas
               </a>
             </li>
-              
               
             
           </ul>

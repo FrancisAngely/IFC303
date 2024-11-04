@@ -4,7 +4,7 @@ $tabla="eventos";
 
 $datos["evento"]=$_POST["evento"];
 $datos["fecha"]=$_POST["fecha"];
-$datos["file_evento"]=$_POST["file_evento"];
+$datos["file_evento"]="";
 $datos["direccion"]=$_POST["direccion"];
 $datos["localidad"]=$_POST["localidad"];
 $datos["provincia"]=$_POST["provincia"];
@@ -13,7 +13,17 @@ $datos["hora_comienzo"]=$_POST["hora_comienzo"];
 $datos["created_at"]=date('Y-m-d h:i:s');
 $datos["updated_at"]=date('Y-m-d h:i:s');
 
-echo saveV($tabla,$datos);
+$eventoId=saveV($tabla,$datos);
 
+
+$upload=UploadFile($_FILES["file_evento"],"eventos","evento_".$eventoId);
+
+
+if($upload!="error"){
+        $datos["file_evento"]=$upload;
+        echo updateById($tabla,$datos,$eventoId);    
+    }else{
+    echo 0;
+}
 
 ?>

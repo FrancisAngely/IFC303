@@ -620,7 +620,9 @@ function SelectOpcionesSel($opciones,$sel){
 }
 
 function UploadFile($file,$carpeta,$nombre){
-  
+        if(!is_dir($carpeta)){
+            mkdir($carpeta, 0777); 
+            }
 
         if($file["name"]!=""){
             //directorio de subida

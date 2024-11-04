@@ -12,34 +12,32 @@
 
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Eventos</h1>
-           <a href="modulo_eventos_new.php" class="btn btn-primary">Nuevo</a>
+        <h1 class="h2">Entradas</h1>
+           <a href="modulo_entradas_new.php" class="btn btn-primary">Nuevo</a>
       </div>
-<!--SELECT `id`, `evento`, `fecha`, `file_evento`, `direccion`, `localidad`, `provincia`, `cp`, `hora_comienzo`, `created_at`, `updated_at` FROM `eventos` WHERE 1-->
       <table class="table">
     <tr>
         <th>Id</th> 
-        <th>Role</th>
-        <th>Fecha</th>
-        <th>Localidad</th>
+        <th>Entrada</th>  
+        <th>Evento</th>
+        <th>Precio</th>
         <th>Acciones</th>
    </tr>
         <?php
-        
-          $eventos=getAllV("eventos");
-        
-         if(count($eventos)>0){
-             foreach($eventos as $e){
+          //$entradas=getAllV("entradas");
+          $entradas=getAllVInner("entradas","eventos","id_eventos","id");
+         
+         if(count($entradas)>0){
+             foreach($entradas as $u){
                  ?>
                     <tr>
-                    <td><?php echo $e["id"];?></td> 
-                    <td><?php echo $e["evento"];?></td> 
-                    <td><?php echo $e["fecha"];?></td> 
-                     <td><?php echo $e["localidad"];?></td>                    
-
-                    <td><a href="modulo_eventos_edit.php?id=<?php echo $e["id"];?>"><i class="fa-solid fa-pen-to-square fa-2x"></i></a>
+                    <td><?php echo $u["id1"];?></td> 
+                    <td><?php echo $u["entrada"];?></td>  
+                    <td><?php echo $u["evento"];?></td>
+                    <td><?php echo $u["precio"];?></td>
+                    <td><a href="modulo_entradas_edit.php?id=<?php echo $u["id1"];?>"><i class="fa-solid fa-pen-to-square fa-2x"></i></a>
                     &nbsp;&nbsp;
-                     <a href="#" data-id="<?php echo $e["id"];?>" class="borrar"><i class="fa-solid fa-trash text-danger"></i></a>    
+                     <a href="#" data-id="<?php echo $u["id1"];?>" class="borrar"><i class="fa-solid fa-trash text-danger"></i></a>    
                     </td>
                     </tr>
                 <?php
@@ -66,7 +64,7 @@
                           buttonsStyling: false
                         });
                         swalWithBootstrapButtons.fire({
-                          title: "Desea eliminar el evento?",
+                          title: "Desea eliminar al usuario?",
                           text: "no hay vuelta atrás!",
                           icon: "warning",
                           showCancelButton: true,
@@ -79,19 +77,19 @@
                               $.ajax({
                                      data:{id:id},
                                      method:"POST",
-                                     url: "modulo_eventos_delete.php", 
+                                     url: "modulo_entradas_delete.php", 
                                      success: function(result){
                                          if(result==1){
                                             swalWithBootstrapButtons.fire({
                                               title: "Eliminado!",
-                                              text: "Evento dado de baja",
+                                              text: "Usuario dado de baja",
                                               icon: "success"
                                             });
                                             padre.hide();
                                          }else{
                                              swalWithBootstrapButtons.fire({
                                               title: "No Eliminado!",
-                                              text: "Evento NO dado de baja",
+                                              text: "Usuario NO dado de baja",
                                               icon: "error"
                                             });
                                          }

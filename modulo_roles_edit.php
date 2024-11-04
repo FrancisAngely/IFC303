@@ -57,7 +57,9 @@ $( document ).ready(function() {
         //SELECT `id`, `id_roles`, `usuario`, `password`, `email`, `created_at`, `updated_at` FROM `roles` WHERE 1
         
             let role=$("#role").val();  
-           
+            let id=$("#id").val(); 
+           let tabla="roles";  
+            let campo="role";
             let error=0;
           
            if(role==""){    
@@ -68,8 +70,21 @@ $( document ).ready(function() {
         
            
         if(error==0){
-            //$("#form1").submit();
+            
              $.ajax({
+                 data:{valor:role,tabla:tabla,campo:campo,id:id},
+                 method:"POST",
+                 url: "verificarUnicoEdit.php", 
+                 success: function(result){
+                     if(result==0){
+                        $("#role_error").html("role existe");
+                        $("#role").val(''); 
+                         $("#role").addClass("borderError");
+                     }else{
+                         $("#role").removeClass("borderError"); 
+                         $("#role_error").html("");
+                         //actualizar
+                                $.ajax({
                  data:$("#form1").serialize(),
                  method:"POST",
                  url: "modulo_roles_update.php", 
@@ -106,7 +121,26 @@ $( document ).ready(function() {
                      }
                 }
              });
+                     }
+                 }
+             });
+            
         }
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            //$("#form1").submit();
+     
+        
          
     });
     
